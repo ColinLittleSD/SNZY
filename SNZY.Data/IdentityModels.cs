@@ -38,6 +38,9 @@ namespace SNZY.WebAPI.Models
 
         public DbSet<ETF> ETFs { get; set; }
 
+        public DbSet<Portfolio> Portfolios { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder
