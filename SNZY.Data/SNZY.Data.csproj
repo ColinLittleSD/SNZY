@@ -85,7 +85,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ETF.cs" />
+    <Compile Include="ETF_Stock.cs" />
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Migrations\202011200106423_InitialCreate.cs" />
+    <Compile Include="Migrations\202011200106423_InitialCreate.Designer.cs">
+      <DependentUpon>202011200106423_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011201713498_added-ETFStocks.cs" />
+    <Compile Include="Migrations\202011201713498_added-ETFStocks.Designer.cs">
+      <DependentUpon>202011201713498_added-ETFStocks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011201808162_Added-ETFStockList.cs" />
+    <Compile Include="Migrations\202011201808162_Added-ETFStockList.Designer.cs">
+      <DependentUpon>202011201808162_Added-ETFStockList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Portfolio.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +107,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011200106423_InitialCreate.resx">
+      <DependentUpon>202011200106423_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011201713498_added-ETFStocks.resx">
+      <DependentUpon>202011201713498_added-ETFStocks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011201808162_Added-ETFStockList.resx">
+      <DependentUpon>202011201808162_Added-ETFStockList.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

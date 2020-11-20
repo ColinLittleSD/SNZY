@@ -50,6 +50,7 @@ namespace SNZY.Services
                             stock =>
                                 new StockListItem
                                 {
+                                    StockId = stock.StockId,
                                     StockName = stock.StockName,
                                     Ticker = stock.Ticker,
                                     Price = stock.Price,
