@@ -21,7 +21,7 @@ namespace SNZY.Services
         {
             var entity = new ETF_Stock()
             {
-                AutherId = _userId,
+                AuthorId = _userId,
                 StockId = model.StockId,
                 ETFId = model.ETFId
             };
@@ -38,7 +38,7 @@ namespace SNZY.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var query = ctx.ETF_Stocks
-                    .Where(e => e.AutherId == _userId)
+                    .Where(e => e.AuthorId == _userId)
                     .Select(e => new ETF_StockListItem
                     {
                         StockId = e.StockId,

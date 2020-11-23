@@ -14,7 +14,7 @@ namespace SNZY.Data
         public int Id { get; set; }
 
         [Required]
-        public Guid AutherId { get; set; }
+        public Guid AuthorId { get; set; }
 
 
         [ForeignKey(nameof(Stock))]
