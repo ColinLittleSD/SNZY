@@ -88,11 +88,6 @@
     <Compile Include="ETFPortfolio.cs" />
     <Compile Include="ETF_Stock.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202011231841217_updates-to-project.cs" />
-    <Compile Include="Migrations\202011231841217_updates-to-project.Designer.cs">
-      <DependentUpon>202011231841217_updates-to-project.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Portfolio.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,11 +96,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011231841217_updates-to-project.resx">
-      <DependentUpon>202011231841217_updates-to-project.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
