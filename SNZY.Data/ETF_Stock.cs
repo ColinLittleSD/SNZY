@@ -7,24 +7,18 @@ using System.Threading.Tasks;
 
 namespace SNZY.Data
 {
-    public class ETF
+    public class ETF_Stock
     {
         [Key]
-        public int ETFId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public Guid AutherId { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public int StockId { get; set; }
 
         [Required]
-        public string Ticker { get; set; }
-
-        [Required]
-        public decimal Price { get; set; }
-
-        public virtual List<Stock> Holdings { get; set; } = new List<Stock>();
-
+        public int ETFId { get; set; }
     }
 }

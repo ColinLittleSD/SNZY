@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using SNZY.Models;
 using SNZY.Models.ETF;
 using SNZY.Services;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Http;
 namespace SNZY.WebAPI.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/ETF")]
     public class ETFController : ApiController
     {
         private ETFService CreateETFService()
@@ -20,6 +22,15 @@ namespace SNZY.WebAPI.Controllers
             return etfService;
         }
 
+        private ETF_StockService CreateETF_StockService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var etf_stockService = new ETF_StockService(userId);
+            return etf_stockService;
+        }
+
+        //GET /api/ETF
+        [Route("")]
         public IHttpActionResult Get()
         {
             var service = CreateETFService();
@@ -27,6 +38,8 @@ namespace SNZY.WebAPI.Controllers
             return Ok(etfs);
         }
 
+        //POST /api/ETF
+        [Route("")]
         public IHttpActionResult Post(ETFCreate etf)
         {
             if (!ModelState.IsValid)
@@ -37,6 +50,34 @@ namespace SNZY.WebAPI.Controllers
             var service = CreateETFService();
 
             if (!service.CreateETF(etf))
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+
+        //GET /api/ETF/GetStocks
+        [Route("~/api/ETF/GetStocks")]
+        public IHttpActionResult GetETF_Stocks()
+        {
+            var service = CreateETF_StockService();
+            var etfstocks = service.GetETF_Stocks();
+            return Ok(etfstocks);
+        }
+
+        //POST /api/ETF/PostStocks
+        [Route("~/api/ETF/PostStocks")]
+        public IHttpActionResult PostETF_Stocks(ETF_StockCreate etf_stock)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateETF_StockService();
+
+            if (!service.CreateETF_Stock(etf_stock))
             {
                 return InternalServerError();
             }

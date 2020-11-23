@@ -1,4 +1,5 @@
 ﻿using SNZY.Data;
+using SNZY.Models;
 using SNZY.Models.ETF;
 using SNZY.WebAPI.Models;
 using System;
@@ -43,9 +44,24 @@ namespace SNZY.Services
                     .Where(etf => etf.AutherId == _userId)
                     .Select(etf => new ETFListItem
                     {
+                        ETFId = etf.ETFId,
                         Name = etf.Name,
                         Ticker = etf.Ticker,
-                        Price = etf.Price
+                        Price = etf.Price,
+
+                        Holdings = ctx.ETF_Stocks.Where(stockInHoldings => stockInHoldings.ETFId == etf.ETFId).Select(stockInHoldings => new ETF_StockListItem
+                        {
+                            ETFId = etf.ETFId,
+                            StockId = stockInHoldings.StockId,
+                            StockName = ctx.Stocks.Where(stock => stock.StockId == stockInHoldings.StockId).Select(stock => stock.StockName).FirstOrDefault()
+
+                        }).ToList()
+
+                        //Holdings = etf.Holdings.Select(stockh => new ETF_StockListItem
+                        //{
+                        //    StockId = stockh.StockId,
+                        //    StockName = stockh.StockName
+                        //}).ToList()
                     });
 
                 return query.ToArray();
