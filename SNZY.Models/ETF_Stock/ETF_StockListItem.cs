@@ -10,9 +10,6 @@ namespace SNZY.Models
     {
         public int StockId { get; set; }
         public string StockName { get; set; }
-
-        public int ETFId { get; set; }
-
-        //public string ETFName { get; set; }
+        public string Ticker { get; set; }
     }
 }

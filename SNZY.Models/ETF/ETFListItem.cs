@@ -15,6 +15,6 @@ namespace SNZY.Models.ETF
 
         public decimal Price { get; set; }
 
-        public virtual List<ETF_StockListItem> Holdings { get; set; } = new List<ETF_StockListItem>();
+        public List<ETF_StockListItem> Holdings { get; set; } = new List<ETF_StockListItem>();
     }
 }
