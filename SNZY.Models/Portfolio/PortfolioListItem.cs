@@ -1,4 +1,5 @@
-﻿using SNZY.Models.StockPortfolio;
+﻿using SNZY.Models.ETFPortfolio;
+using SNZY.Models.StockPortfolio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace SNZY.Models.Portfolio
         public string Name { get; set; }
 
         public List<StockPortfolioListItem> StocksInPortfolio = new List<StockPortfolioListItem>();
+
+        public List<ETFPortfolioListItem> ETFsInPortfolio = new List<ETFPortfolioListItem>();
     }
 }

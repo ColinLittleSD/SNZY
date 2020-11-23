@@ -1,4 +1,5 @@
 ﻿using SNZY.Data;
+using SNZY.Models.ETFPortfolio;
 using SNZY.Models.Portfolio;
 using SNZY.Models.StockPortfolio;
 using SNZY.WebAPI.Models;
@@ -51,9 +52,14 @@ namespace SNZY.Services
                             StockName = stockport.Stock.StockName,
                             Ticker = stockport.Stock.Ticker
 
+                        }).ToList(),
+                        ETFsInPortfolio = port.ETFInPortfolio.Select(etfPort => new ETFPortfolioListItem
+                        {
+
+                            ETFName = etfPort.ETF.Name,
+                            Ticker = etfPort.ETF.Ticker
                         }).ToList()
                     });
-
 
                 return query.ToArray();
             }

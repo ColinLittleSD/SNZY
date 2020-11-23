@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ETF.cs" />
+    <Compile Include="ETFPortfolio.cs" />
     <Compile Include="ETF_Stock.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Portfolio.cs" />
