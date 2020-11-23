@@ -41,9 +41,9 @@ namespace SNZY.Services
                     .Where(e => e.AutherId == _userId)
                     .Select(e => new ETF_StockListItem
                     {
-                        ETFId = e.ETFId,
                         StockId = e.StockId,
-                        StockName = ctx.Stocks.Where(stock => stock.StockId == e.StockId).Select(stock => stock.StockName).FirstOrDefault()
+                        StockName = e.Stock.StockName,
+                        Ticker = e.Stock.Ticker
                     });
 
                 return query.ToArray();

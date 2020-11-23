@@ -49,19 +49,13 @@ namespace SNZY.Services
                         Ticker = etf.Ticker,
                         Price = etf.Price,
 
-                        Holdings = ctx.ETF_Stocks.Where(stockInHoldings => stockInHoldings.ETFId == etf.ETFId).Select(stockInHoldings => new ETF_StockListItem
+                        Holdings = etf.Holdings.Select(stock => new ETF_StockListItem
                         {
-                            ETFId = etf.ETFId,
-                            StockId = stockInHoldings.StockId,
-                            StockName = ctx.Stocks.Where(stock => stock.StockId == stockInHoldings.StockId).Select(stock => stock.StockName).FirstOrDefault()
+                            StockId = stock.StockId,
+                            StockName = stock.Stock.StockName,
+                            Ticker = stock.Stock.Ticker
 
                         }).ToList()
-
-                        //Holdings = etf.Holdings.Select(stockh => new ETF_StockListItem
-                        //{
-                        //    StockId = stockh.StockId,
-                        //    StockName = stockh.StockName
-                        //}).ToList()
                     });
 
                 return query.ToArray();
