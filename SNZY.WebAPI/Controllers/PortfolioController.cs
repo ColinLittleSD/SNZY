@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using SNZY.Models.ETFPortfolio;
 using SNZY.Models.Portfolio;
 using SNZY.Models.StockPortfolio;
 using SNZY.Services;
@@ -29,7 +30,14 @@ namespace SNZY.WebAPI.Controllers
             return stockPortfolioService;
         }
 
-        [Route ("")]
+        private ETFPortfolioService CreateETFPortfolioService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var etfPortfolioService = new ETFPortfolioService(userId);
+            return etfPortfolioService;
+        }
+
+        [Route("")]
         public IHttpActionResult Post(PortfolioCreate portfolio)
         {
             if (!ModelState.IsValid)
@@ -43,7 +51,7 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
-        [Route ("")]
+        [Route("")]
         public IHttpActionResult Get()
         {
             PortfolioService portService = CreatePortfolioService();
@@ -70,6 +78,32 @@ namespace SNZY.WebAPI.Controllers
             var service = CreateStockPortfolioService();
 
             if (!service.CreateStockPortfolio(port))
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+
+        [Route("~/api/ETFPortfolio/GetPortfolioETFs")]
+        public IHttpActionResult GetPortfolioETFs()
+        {
+            var service = CreateETFPortfolioService();
+            var portstocks = service.GetETFPortfolio();
+            return Ok(portstocks);
+        }
+
+        [Route("~/api/ETFPortfolio/PostPortfolioETFs")]
+        public IHttpActionResult PostETFPortfolio(ETFPortfolioCreate etfPort)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateETFPortfolioService();
+
+            if (!service.CreateETFPortfolio(etfPort))
             {
                 return InternalServerError();
             }

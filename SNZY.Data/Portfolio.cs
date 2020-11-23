@@ -16,6 +16,6 @@ namespace SNZY.Data
         [Required]
         public string Name { get; set; }
         public virtual List<StockPortfolio> StocksInPortfolio { get; set; } = new List<StockPortfolio>();
-        public virtual List<ETF> ETFInPortfolio { get; set; } = new List<ETF>();
+        public virtual List<ETFPortfolio> ETFInPortfolio { get; set; } = new List<ETFPortfolio>();
     }
 }

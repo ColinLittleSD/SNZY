@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ETFPortfolioService.cs" />
     <Compile Include="ETFService.cs" />
     <Compile Include="ETF_StockService.cs" />
     <Compile Include="PortfolioService.cs" />
