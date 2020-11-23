@@ -13,7 +13,7 @@ namespace SNZY.Data
         public int ETFId { get; set; }
 
         [Required]
-        public Guid AutherId { get; set; }
+        public Guid AuthorId { get; set; }
 
         [Required]
         public string Name { get; set; }

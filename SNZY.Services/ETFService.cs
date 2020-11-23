@@ -22,7 +22,7 @@ namespace SNZY.Services
         {
             var entity = new ETF()
             {
-                AutherId = _userId,
+                AuthorId = _userId,
                 Name = model.Name,
                 Ticker = model.Ticker,
                 Price = model.Price
@@ -40,7 +40,7 @@ namespace SNZY.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var query = ctx.ETFs
-                    .Where(etf => etf.AutherId == _userId)
+                    .Where(etf => etf.AuthorId == _userId)
                     .Select(etf => new ETFListItem
                     {
                         Name = etf.Name,
