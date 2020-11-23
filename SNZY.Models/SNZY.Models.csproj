@@ -65,6 +65,8 @@
     <Compile Include="StockDetail.cs" />
     <Compile Include="StockEdit.cs" />
     <Compile Include="StockListItem.cs" />
+    <Compile Include="StockPortfolio\StockPortfolioCreate.cs" />
+    <Compile Include="StockPortfolio\StockPortfolioListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

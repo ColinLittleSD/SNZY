@@ -58,6 +58,7 @@
     <Compile Include="ETF_StockService.cs" />
     <Compile Include="PortfolioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockPortfolioService.cs" />
     <Compile Include="StockService.cs" />
   </ItemGroup>
   <ItemGroup>
