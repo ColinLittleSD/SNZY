@@ -24,8 +24,7 @@ namespace SNZY.Data
         [Required]
         public decimal Price { get; set; }
 
-        //[Required]
-        //public List<Stock> Holdings { get; set; }
+        public virtual List<ETF_Stock> Holdings { get; set; } = new List<ETF_Stock>();
 
     }
 }
