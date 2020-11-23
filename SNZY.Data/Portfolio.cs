@@ -11,6 +11,11 @@ namespace SNZY.Data
     {
         [Key]
         public int PortfolioID { get; set; }
-
+        [Required]
+        public Guid AuthorId { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public virtual List<Stock> StocksInPortfolio { get; set; } = new List<Stock>();
+        public virtual List<ETF> ETFInPortfolio { get; set; } = new List<ETF>();
     }
 }
