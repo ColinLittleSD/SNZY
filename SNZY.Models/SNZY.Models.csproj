@@ -58,6 +58,8 @@
     <Compile Include="ETF\ETFListItem.cs" />
     <Compile Include="ETF_Stock\ETF_StockListItem.cs" />
     <Compile Include="ETF_Stock\ETF_StockCreate.cs" />
+    <Compile Include="Portfolio\PortfolioCreate.cs" />
+    <Compile Include="Portfolio\PortfolioListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockCreate.cs" />
     <Compile Include="StockDetail.cs" />
