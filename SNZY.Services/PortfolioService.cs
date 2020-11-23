@@ -1,5 +1,6 @@
 ﻿using SNZY.Data;
 using SNZY.Models.Portfolio;
+using SNZY.Models.StockPortfolio;
 using SNZY.WebAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,17 @@ namespace SNZY.Services
                     .Where(port => port.AuthorId == _userId)
                     .Select(port => new PortfolioListItem
                     {
-                        Name = port.Name
-                    }).ToList();
+                        
+                        Name = port.Name,
+                       
+                        StocksInPortfolio = port.StocksInPortfolio.Select(stockport => new StockPortfolioListItem
+                        {
+
+                            StockName = stockport.Stock.StockName,
+                            Ticker = stockport.Stock.Ticker
+
+                        }).ToList()
+                    });
 
 
                 return query.ToArray();
