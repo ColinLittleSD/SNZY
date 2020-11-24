@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIModels\ETFAPIModel.cs" />
+    <Compile Include="APIModels\StockAPIModel.cs" />
     <Compile Include="ETFPortfolio\ETFPortfolioCreate.cs" />
     <Compile Include="ETFPortfolio\ETFPortfolioListItem.cs" />
     <Compile Include="ETF\ETFCreate.cs" />
