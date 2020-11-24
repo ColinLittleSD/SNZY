@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SNZY.WebAPI.Controllers
@@ -38,37 +39,37 @@ namespace SNZY.WebAPI.Controllers
         }
 
         [Route("")]
-        public IHttpActionResult Post(PortfolioCreate portfolio)
+        public async Task<IHttpActionResult> Post(PortfolioCreate portfolio)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreatePortfolioService();
 
-            if (!service.CreatePortfolio(portfolio))
+            if (await service.CreatePortfolio(portfolio) == false)
                 return InternalServerError();
 
             return Ok();
         }
 
         [Route("")]
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> Get()
         {
             PortfolioService portService = CreatePortfolioService();
-            var posts = portService.GetPortfolio();
+            var posts = await portService.GetPortfolio();
             return Ok(posts);
         }
 
         [Route("~/api/StockPortfolio/GetPortfolioStocks")]
-        public IHttpActionResult GetPortfolioStocks()
+        public async Task<IHttpActionResult> GetPortfolioStocks()
         {
             var service = CreateStockPortfolioService();
-            var portstocks = service.GetStockPortfolio();
+            var portstocks = await service.GetStockPortfolio();
             return Ok(portstocks);
         }
 
         [Route("~/api/StockPortfolio/PostPortfolioStocks")]
-        public IHttpActionResult PostStockPortfolio(StockPortfolioCreate port)
+        public async Task<IHttpActionResult> PostStockPortfolio(StockPortfolioCreate port)
         {
             if (!ModelState.IsValid)
             {
@@ -77,7 +78,7 @@ namespace SNZY.WebAPI.Controllers
 
             var service = CreateStockPortfolioService();
 
-            if (!service.CreateStockPortfolio(port))
+            if (await service.CreateStockPortfolio(port) == false)
             {
                 return InternalServerError();
             }
@@ -86,15 +87,15 @@ namespace SNZY.WebAPI.Controllers
         }
 
         [Route("~/api/ETFPortfolio/GetPortfolioETFs")]
-        public IHttpActionResult GetPortfolioETFs()
+        public async Task<IHttpActionResult> GetPortfolioETFs()
         {
             var service = CreateETFPortfolioService();
-            var portstocks = service.GetETFPortfolio();
+            var portstocks = await service.GetETFPortfolio();
             return Ok(portstocks);
         }
 
         [Route("~/api/ETFPortfolio/PostPortfolioETFs")]
-        public IHttpActionResult PostETFPortfolio(ETFPortfolioCreate etfPort)
+        public async Task<IHttpActionResult> PostETFPortfolio(ETFPortfolioCreate etfPort)
         {
             if (!ModelState.IsValid)
             {
@@ -103,7 +104,7 @@ namespace SNZY.WebAPI.Controllers
 
             var service = CreateETFPortfolioService();
 
-            if (!service.CreateETFPortfolio(etfPort))
+            if (await service.CreateETFPortfolio(etfPort) == false)
             {
                 return InternalServerError();
             }

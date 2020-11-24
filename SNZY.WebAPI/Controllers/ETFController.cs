@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SNZY.WebAPI.Controllers
@@ -31,16 +32,16 @@ namespace SNZY.WebAPI.Controllers
 
         //GET /api/ETF
         [Route("")]
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> Get()
         {
             var service = CreateETFService();
-            var etfs = service.GetETFs();
+            var etfs = await service.GetETFs();
             return Ok(etfs);
         }
 
         //POST /api/ETF
         [Route("")]
-        public IHttpActionResult Post(ETFCreate etf)
+        public async Task<IHttpActionResult> Post(ETFCreate etf)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +50,7 @@ namespace SNZY.WebAPI.Controllers
 
             var service = CreateETFService();
 
-            if (!service.CreateETF(etf))
+            if (await service.CreateETF(etf) == false)
             {
                 return InternalServerError();
             }
@@ -59,16 +60,16 @@ namespace SNZY.WebAPI.Controllers
 
         //GET /api/ETF/GetStocks
         [Route("~/api/ETF/GetStocks")]
-        public IHttpActionResult GetETF_Stocks()
+        public async Task<IHttpActionResult> GetETF_Stocks()
         {
             var service = CreateETF_StockService();
-            var etfstocks = service.GetETF_Stocks();
+            var etfstocks = await service.GetETF_Stocks();
             return Ok(etfstocks);
         }
 
         //POST /api/ETF/PostStocks
         [Route("~/api/ETF/PostStocks")]
-        public IHttpActionResult PostETF_Stocks(ETF_StockCreate etf_stock)
+        public async Task<IHttpActionResult> PostETF_Stocks(ETF_StockCreate etf_stock)
         {
             if (!ModelState.IsValid)
             {
@@ -77,7 +78,7 @@ namespace SNZY.WebAPI.Controllers
 
             var service = CreateETF_StockService();
 
-            if (!service.CreateETF_Stock(etf_stock))
+            if (await service.CreateETF_Stock(etf_stock) == false)
             {
                 return InternalServerError();
             }

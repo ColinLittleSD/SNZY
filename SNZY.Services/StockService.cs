@@ -3,6 +3,7 @@ using SNZY.Models;
 using SNZY.WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace SNZY.Services
             _userId = userId;
         }
 
-        public bool CreateStock(StockCreate model)
+        public async Task<bool> CreateStock(StockCreate model)
         {
             var entity =
                 new Stock()
@@ -34,15 +35,15 @@ namespace SNZY.Services
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Stocks.Add(entity);
-                return ctx.SaveChanges() == 1;
+                return await ctx.SaveChangesAsync() == 1;
             }
         }
 
-        public IEnumerable<StockListItem> GetStockPosts()
+        public async Task<IEnumerable<StockListItem>> GetStockPosts()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
+                var query = await
                     ctx
                         .Stocks
                         .Where(stock => stock.AuthorId == _userId)
@@ -57,9 +58,9 @@ namespace SNZY.Services
                                     AverageVolume = stock.AverageVolume,
                                     MarketCap = stock.MarketCap
                                 }
-                        ); ;
+                        ).ToArrayAsync();
 
-                return query.ToArray();
+                return query;
             }
         }
     }

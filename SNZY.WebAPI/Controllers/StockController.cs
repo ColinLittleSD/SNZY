@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SNZY.WebAPI.Controllers
@@ -20,22 +21,23 @@ namespace SNZY.WebAPI.Controllers
             return postService;
         }
 
-        public IHttpActionResult Post(StockCreate stock)
+        public async Task<IHttpActionResult> Post(StockCreate stock)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateStockService();
 
-            if (!service.CreateStock(stock))
+            if (await service.CreateStock(stock) == false)
                 return InternalServerError();
 
             return Ok();
         }
-        public IHttpActionResult Get()
+
+        public async Task<IHttpActionResult> Get()
         {
             StockService stockService = CreateStockService();
-            var posts = stockService.GetStockPosts();
+            var posts = await stockService.GetStockPosts();
             return Ok(posts);
         }
     }
