@@ -52,5 +52,16 @@ namespace SNZY.Services
             }
         }
 
+        public async Task<bool> RemovePortfolioStocks(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var stockInPortfolio = ctx.StockPortfolios.Single(stock=> stock.StockId == id && stock.AuthorId == _userId);
+
+                ctx.StockPortfolios.Remove(stockInPortfolio);
+
+                return await ctx.SaveChangesAsync() == 1;
+            }
+        }
     }
 }

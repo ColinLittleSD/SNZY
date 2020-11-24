@@ -124,5 +124,17 @@ namespace SNZY.WebAPI.Controllers
             }
             return Ok();
         }
+
+        [Route("~/api/StockPortfolio/RemovePortfolioStocks/{id}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> RemoveStocksFromPortfolio(int id)
+        {
+            var service = CreateStockPortfolioService();
+            if (await service.RemovePortfolioStocks(id) == false)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
     }
 }
