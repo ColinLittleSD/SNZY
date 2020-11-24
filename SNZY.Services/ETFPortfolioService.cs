@@ -51,5 +51,16 @@ namespace SNZY.Services
 
             }
         }
+        public async Task<bool> RemovePortfolioETFs(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var etfInPortfolio =  ctx.ETFPortfolios.Single(etf => etf.ETFId == id && etf.AuthorId == _userId);
+
+                ctx.ETFPortfolios.Remove(etfInPortfolio);
+
+                return await ctx.SaveChangesAsync() == 1;
+            }
+        }
     }
 }
