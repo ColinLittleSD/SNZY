@@ -111,5 +111,18 @@ namespace SNZY.WebAPI.Controllers
 
             return Ok();
         }
+
+        
+        [Route("~/api/ETFPortfolio/RemovePortfolioETFs/{id}")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> RemoveETFFromPortfolio(int id)
+        {
+            var service = CreateETFPortfolioService();
+            if (await service.RemovePortfolioETFs(id) == false)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
     }
 }
