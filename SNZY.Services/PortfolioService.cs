@@ -5,6 +5,7 @@ using SNZY.Models.StockPortfolio;
 using SNZY.WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace SNZY.Services
             _userId = userId;
         }
 
-        public bool CreatePortfolio(PortfolioCreate model)
+        public async Task<bool> CreatePortfolio(PortfolioCreate model)
         {
             var entity = new Portfolio()
             {
@@ -31,15 +32,15 @@ namespace SNZY.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var query = ctx.Portfolios.Add(entity);
-                return ctx.SaveChanges() == 1;
+                return await ctx.SaveChangesAsync() == 1;
             }
         }
 
-        public IEnumerable<PortfolioListItem> GetPortfolio()
+        public async Task<IEnumerable<PortfolioListItem>> GetPortfolio()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.Portfolios
+                var query = await ctx.Portfolios
                     .Where(port => port.AuthorId == _userId)
                     .Select(port => new PortfolioListItem
                     {
@@ -53,15 +54,17 @@ namespace SNZY.Services
                             Ticker = stockport.Stock.Ticker
 
                         }).ToList(),
+
                         ETFsInPortfolio = port.ETFInPortfolio.Select(etfPort => new ETFPortfolioListItem
                         {
 
                             ETFName = etfPort.ETF.Name,
                             Ticker = etfPort.ETF.Ticker
                         }).ToList()
-                    });
 
-                return query.ToArray();
+                    }).ToArrayAsync();
+
+                return query;
             }
         }
     }

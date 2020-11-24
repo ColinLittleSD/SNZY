@@ -3,6 +3,7 @@ using SNZY.Models;
 using SNZY.WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace SNZY.Services
         {
             _userId = userId;
         }
-        public bool CreateETF_Stock(ETF_StockCreate model)
+        public async Task<bool> CreateETF_Stock(ETF_StockCreate model)
         {
             var entity = new ETF_Stock()
             {
@@ -29,24 +30,24 @@ namespace SNZY.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var query = ctx.ETF_Stocks.Add(entity);
-                return ctx.SaveChanges() == 1;
+                return await ctx.SaveChangesAsync() == 1;
             }
         }
 
-        public IEnumerable<ETF_StockListItem> GetETF_Stocks()
+        public async Task<IEnumerable<ETF_StockListItem>> GetETF_Stocks()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.ETF_Stocks
+                var query = await ctx.ETF_Stocks
                     .Where(e => e.AuthorId == _userId)
                     .Select(e => new ETF_StockListItem
                     {
                         StockId = e.StockId,
                         StockName = e.Stock.StockName,
                         Ticker = e.Stock.Ticker
-                    });
+                    }).ToArrayAsync();
 
-                return query.ToArray();
+                return query;
 
             }
         }
