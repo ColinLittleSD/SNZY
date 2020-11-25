@@ -54,11 +54,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ETFPortfolioService.cs" />
+    <Compile Include="ETFService.cs" />
+    <Compile Include="ETF_StockService.cs" />
+    <Compile Include="PortfolioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockPortfolioService.cs" />
+    <Compile Include="StockService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SNZY.Data\SNZY.Data.csproj">
+      <Project>{A14127A4-DA9E-45BA-B6F3-7CBD450AE642}</Project>
+      <Name>SNZY.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SNZY.Models\SNZY.Models.csproj">
+      <Project>{047E7CCA-9AB1-49B5-942C-2414E6628B94}</Project>
+      <Name>SNZY.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,7 +10,7 @@ namespace SNZY.WebAPI.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "SNZY Home";
 
             return View();
         }

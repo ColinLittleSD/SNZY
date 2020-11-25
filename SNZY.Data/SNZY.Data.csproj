@@ -84,9 +84,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ETF.cs" />
+    <Compile Include="ETFPortfolio.cs" />
+    <Compile Include="ETF_Stock.cs" />
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Portfolio.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockPortfolio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
