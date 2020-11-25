@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SNZY.Models.APIModels
 {
-    public class StockAPIModel
+    public class ShareInfoModel
     {
         public class Meta
         {

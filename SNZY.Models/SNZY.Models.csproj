@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIModels\ETFAPIModel.cs" />
-    <Compile Include="APIModels\StockAPIModel.cs" />
+    <Compile Include="APIModels\ShareInfoModel.cs" />
     <Compile Include="ETFPortfolio\ETFPortfolioCreate.cs" />
     <Compile Include="ETFPortfolio\ETFPortfolioListItem.cs" />
     <Compile Include="ETF\ETFCreate.cs" />
@@ -71,6 +71,8 @@
     <Compile Include="StockListItem.cs" />
     <Compile Include="StockPortfolio\StockPortfolioCreate.cs" />
     <Compile Include="StockPortfolio\StockPortfolioListItem.cs" />
+    <Compile Include="StockWithNewData.cs" />
+    <Compile Include="SharePriceModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
