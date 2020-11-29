@@ -73,14 +73,14 @@ namespace SNZY.Services
                 var stockNewData = await service.GetStockInfo(ticker);
                 var stockNewPrice = await service.GetStockPrice(ticker);
                 
-                string datetime = stockNewData.values[0].datetime;
-                string open = stockNewData.values[0].open;
-                string high = stockNewData.values[0].high;
-                string low = stockNewData.values[0].low;
-                string close = stockNewData.values[0].close;
-                string volume = stockNewData.values[0].volume;
+                DateTime datetime = DateTime.Parse(stockNewData.values[0].datetime);
+                double open = double.Parse(stockNewData.values[0].open);
+                double high = double.Parse(stockNewData.values[0].high);
+                double low = double.Parse(stockNewData.values[0].low);
+                double close = double.Parse(stockNewData.values[0].close);
+                double volume = double.Parse(stockNewData.values[0].volume);
 
-                string price = stockNewPrice.price;
+                double price = double.Parse(stockNewPrice.price);
 
                 string buyOrHold = (Convert.ToDouble(low) < Convert.ToDouble(open)) ? "Buy it" : "Hold it";
 
@@ -92,7 +92,7 @@ namespace SNZY.Services
                         StockName = n.StockName,
                         Ticker = n.Ticker,
                         Price = price,
-                        AverageVolume = n.AverageVolume,
+                        //AverageVolume = n.AverageVolume,
                         MarketCap = n.MarketCap,
                         Datetime = datetime,
                         Open = open,
