@@ -8,7 +8,7 @@
 
 
 ## Resource Links
-### SNZY GitHub
+### SNZY GitHub Repository
 https://github.com/ColinLittleSD/SNZY
 
 ### SNZY Tello Board
