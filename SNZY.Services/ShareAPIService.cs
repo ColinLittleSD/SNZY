@@ -47,5 +47,19 @@ namespace SNZY.Services
 
             return myDeserializedClass;
         }
+
+        public double GetStockPriceWithOutAsync(string ticker)
+        {
+            string apiKey = "a6ae3f3429144b7fa3160c590b1c81b1";
+
+            var client = new RestClient($"https://api.twelvedata.com/price?symbol={ticker}&apikey={apiKey}&source=docs");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            var myDeserializedClass = JsonConvert.DeserializeObject<SharePriceModel>(response.Content);
+            double priceInDouble = Convert.ToDouble(myDeserializedClass.price);
+            return priceInDouble;
+        }
     }
 }

@@ -43,8 +43,10 @@ namespace SNZY.Services
                     .Where(e => e.AuthorId == _userId)
                     .Select(e => new StockPortfolioListItem
                     {
+                        StockId = e.Stock.StockId,
                         StockName = e.Stock.StockName,
                         Ticker = e.Stock.Ticker
+
                     }).ToArrayAsync();
 
                 return query;

@@ -12,8 +12,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "2QiJerB1o_6KKr1h17wll8dQo1gARyNwNllff5JZX20Rd3YzR4P2b3ur_15kQq6G-YUduceBq1drqw5I5NaijDIJsVORKkOLmOmE0uM_4t_VQp_6InueUc0PL-ipKjEd-Ls41I7AxPPc7udmCvLHRkvTEYTbAcjeBuJfsuuIllGWM-oJq3D9J42CopR-kAooJSjt1yxzk_gkoyjpLJHO8C_eWfzO7LIDBxTA0N7vF_sqj9lOU72DboTqRwHLxjJ1UMLUgw9DvT1sIydwgF72jlutiSvPCj7vT2SU5U3RUZMIhRvLh130O5z53jefdinBVijKFcKhEXRo198EI-GOTYYxshB3TUwgA7Uk2YBeXEWPfm7MpAETOd3m7TOSVD23yNBwXpOi3WbBRp6zcD9m1CZhyGU-EHfjBvI5Ss0LaPZLxV0kcvbyv7ioajhXVHVWRus12gI7Cc0opC2CSO6R-MUuCWLvVAVLv1YThoUyjkmXAN8YOBDqb-ZKvo2EJHe8";
-        
+        private static string AuthorizationKey = "btXey_MOdXIFTQMH2J81Cx-8ORrPc5e4h-aNQYtb9FciYs_PSXxz9cxOJJmt7wxqIV6OkPF9R1hQM4oQ1f65SScx_w8Q9z5H0rqpDEHqYMYRF7e1EHJ3ImFzNBlBJWSxTpanWKfcBBk3n095OE5CeF5vqcNPkKFc8QQsHJQTph1AslP2Lz_6EHwnVaDG_lME1A1cRjVcpOZs3fnj3RtnWXidoJmEw9MY8g4iYknUqGqSb37HQrG6bhyBvqtJuuFc95Se1meRl5Dx3aGh66F5XODiPH8Fk-i5NO6slRD5_dlYR7RniCEqky3gde1UmHInorOBNk4ERoCdwTPOITBly0GCG4zuEIalUaZ51-Qbqfrwr9ZP3leLx-6cHtIiZ2QvoqM-g_KQBB5VEjYENq9qfC9_WcEm25dQIWWtjNJECa65bfIwOSujJ19yKEklcbFFoytaqDdxAoGaZVawezIibz2iBSEd397fid7WEjSP4Go";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -72,11 +71,14 @@ namespace SNZY_Console
             var result = stockAPI.GetAllStocks();
             JArray resultArray = JArray.Parse(result);
 
-            Console.WriteLine("Name \t Ticker \t Price \t AverageVolumen \t MarketCap");
+            const int narrowPaddingLength = -10;
+            const int namePaddingLength = -30;
+
+            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength}   {"MarketCap",narrowPaddingLength}");
 
             foreach (var item in resultArray)
             {
-                Console.WriteLine($"{item["StockId"]} {item["StockName"], 10} \t {item["Ticker"], 15} \t {item["Price"], 15} \t {item["averageVolume"], 15} \t {item["MarketCap"], 15}");
+                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}  {item["Price"],narrowPaddingLength}  {item["MarketCap"],narrowPaddingLength}");
             }
 
             Console.WriteLine("\nPress any key to return to main menu.");
@@ -89,15 +91,18 @@ namespace SNZY_Console
             Console.Clear();
             Console.WriteLine("ETFs: \n");
 
+            const int narrowPaddingLength = -10;
+            const int namePaddingLength = -40;
+
             var result = etfAPI.GetAllETF();
             JArray resultArray = JArray.Parse(result);
 
-            Console.WriteLine("ETFId \t Name \t Ticker \t Price \t Holding");
+            Console.WriteLine($"{"ETFId",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
             
             foreach(var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
-                Console.WriteLine($"{item["ETFId"]} {item["Name"],10} {item["Price"], 5} {item["Ticker"],15} {HoldingsList[0]["StockName"]}");
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Price"],narrowPaddingLength} {item["Ticker"],narrowPaddingLength} ");
             }
 
             Console.WriteLine("\nPress any key to return to main menu.");
@@ -278,11 +283,14 @@ namespace SNZY_Console
 
         private void DisplayStockHelper(JArray resultArray)
         {
-            Console.WriteLine("Name \t Ticker \t Price \t AverageVolumen \t MarketCap");
+            const int narrowPaddingLength = -10;
+            const int namePaddingLength = -30;
+
+            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
 
             foreach (var item in resultArray)
             {
-                Console.WriteLine($"{item["StockId"]} {item["StockName"],10} \t {item["Ticker"],15} \t {item["Price"],15} \t {item["averageVolume"],15} \t {item["MarketCap"],15}");
+                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}  {item["Price"],narrowPaddingLength} ");
             }
         }
 
