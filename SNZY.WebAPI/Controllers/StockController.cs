@@ -44,7 +44,7 @@ namespace SNZY.WebAPI.Controllers
             return Ok(posts);
         }
 
-        [Route("api/Stock/GetByTicker/")]
+        [Route("~/api/Stock/GetByTicker/")]
         public async Task<IHttpActionResult> GetStockByTicker(string ticker)
         {
             StockService stockService = CreateStockService();

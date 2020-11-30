@@ -56,7 +56,7 @@ namespace SNZY.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var stockInPortfolio = ctx.StockPortfolios.Single(stock=> stock.StockId == id && stock.AuthorId == _userId);
+                var stockInPortfolio = ctx.StockPortfolios.FirstOrDefault(stock=> stock.StockId == id && stock.AuthorId == _userId);
 
                 ctx.StockPortfolios.Remove(stockInPortfolio);
 

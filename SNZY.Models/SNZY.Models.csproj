@@ -65,10 +65,10 @@
     <Compile Include="Portfolio\PortfolioCreate.cs" />
     <Compile Include="Portfolio\PortfolioListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockCreate.cs" />
-    <Compile Include="StockDetail.cs" />
-    <Compile Include="StockEdit.cs" />
-    <Compile Include="StockListItem.cs" />
+    <Compile Include="Stock\StockCreate.cs" />
+    <Compile Include="Stock\StockDetail.cs" />
+    <Compile Include="Stock\StockEdit.cs" />
+    <Compile Include="Stock\StockListItem.cs" />
     <Compile Include="StockPortfolio\StockPortfolioCreate.cs" />
     <Compile Include="StockPortfolio\StockPortfolioListItem.cs" />
     <Compile Include="StockWithNewData.cs" />
