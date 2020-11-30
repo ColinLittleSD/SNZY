@@ -92,7 +92,6 @@ namespace SNZY.Services
                         StockName = n.StockName,
                         Ticker = n.Ticker,
                         Price = price,
-                        //AverageVolume = n.AverageVolume,
                         MarketCap = n.MarketCap,
                         Datetime = datetime,
                         Open = open,
