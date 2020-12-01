@@ -12,7 +12,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "btXey_MOdXIFTQMH2J81Cx-8ORrPc5e4h-aNQYtb9FciYs_PSXxz9cxOJJmt7wxqIV6OkPF9R1hQM4oQ1f65SScx_w8Q9z5H0rqpDEHqYMYRF7e1EHJ3ImFzNBlBJWSxTpanWKfcBBk3n095OE5CeF5vqcNPkKFc8QQsHJQTph1AslP2Lz_6EHwnVaDG_lME1A1cRjVcpOZs3fnj3RtnWXidoJmEw9MY8g4iYknUqGqSb37HQrG6bhyBvqtJuuFc95Se1meRl5Dx3aGh66F5XODiPH8Fk-i5NO6slRD5_dlYR7RniCEqky3gde1UmHInorOBNk4ERoCdwTPOITBly0GCG4zuEIalUaZ51-Qbqfrwr9ZP3leLx-6cHtIiZ2QvoqM-g_KQBB5VEjYENq9qfC9_WcEm25dQIWWtjNJECa65bfIwOSujJ19yKEklcbFFoytaqDdxAoGaZVawezIibz2iBSEd397fid7WEjSP4Go";
+        private static string AuthorizationKey = "bfoDf_5Nnrkk7Cc_B5xtG74FdhFTnPhOCEk4UQuvHdkKABdaFa_HUTOWKlMeuTE8Qf7k3sV-qY8BmaGgp9JInYfRyeUdU56ku35UhKJCr3Fch_7PKIdqnCVJ461N4algV7RSSw8CbuxM2iWWDxAma_2JF4W-DX4CHH78xN1ndc6ONHr1HExHAeHDIbdbf7vKoCygCR3W1rTi0rcL5CDCBpx7enjWKJntGUfdSZMRtOJ8PCDpDQNhOiOvorIZ3FMRyQdRXhTVtfBqDGo7oBY1R2nf3GDRsaQSlJOXd-sGf_oC_tKdQcjbjasaHB3JU9-3lT8-KtRpGQwlH5p3C6lXdfBiqwpVq2c-2SR6QpfLQttSlb8zcrMrUJuk_ZAfBjtPUka3X8d7Ebe-533SXcK496Elzu98kjl4QXzUxFELL59I09zNTEQ0HxW7bIakCdyb1vBzx3zteosRVvPeJ1L4s4nqTMqYqI8gfS6QGoKB9PM7qjunpNmkXXfngz0Jvrf1";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -74,7 +74,7 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}");
+            Console.WriteLine($"{"Stock ID",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}");
 
             foreach (var item in resultArray)
             {
@@ -99,7 +99,7 @@ namespace SNZY_Console
             var result = etfAPI.GetAllETF();
             JArray resultArray = JArray.Parse(result);
 
-            Console.WriteLine($"{"ETFId",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
+            Console.WriteLine($"{"ETF ID",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
             
             foreach(var item in resultArray)
             {
@@ -208,7 +208,7 @@ namespace SNZY_Console
         //3. Post a stock
         private void PostStockToPortfolio()
         {
-            Console.WriteLine("Enter Stock id: ");
+            Console.Write("Enter Stock ID: ");
 
             int input_StockId = 0;
 
@@ -218,7 +218,7 @@ namespace SNZY_Console
             }
             else
             {
-                Console.WriteLine("\nInvalid input. StockId should be numerical");
+                Console.WriteLine("\nInvalid input. Stock ID should be numerical");
                 Console.WriteLine("Press any key to continue portfolio menu.");
                 Console.ReadLine();
                 return;
@@ -229,7 +229,7 @@ namespace SNZY_Console
         //4. Post an etf
         private void PostETFToPortfolio()
         {
-            Console.WriteLine("Enter ETF id: ");
+            Console.Write("Enter ETF ID: ");
             int input_ETFId = 0;
 
             if (int.TryParse(Console.ReadLine(), out input_ETFId))
@@ -248,7 +248,7 @@ namespace SNZY_Console
         //5. Delete a stock
         private void DeleteStockFromPortfolio()
         {
-            Console.WriteLine("Enter Stock id: ");
+            Console.Write("Enter Stock ID: ");
 
             int input_StockId = 0;
 
@@ -268,7 +268,7 @@ namespace SNZY_Console
         //6. Delete an ETF
         private void DeleteETFFromPortfolio()
         {
-            Console.WriteLine("Enter ETF id: ");
+            Console.Write("Enter ETF ID: ");
 
             int input_ETFId = 0;
 
@@ -318,8 +318,8 @@ namespace SNZY_Console
 
             while (continueToRun)
             {
-                
 
+                Console.WriteLine("");
                 Console.WriteLine("What would you like to see?\n" +
                     "1. Show Price\n" +
                     "2. Show Details\n" +
@@ -350,28 +350,30 @@ namespace SNZY_Console
 
         private void ShowPrice()
         {
-            Console.WriteLine("Enter ticker: ");
-
+            Console.Clear();
+            Console.Write("Enter Ticker: ");
             string input_ticker = Console.ReadLine();
             var shareAPI = new ShareAPI();
             double price = shareAPI.GetSharePrice(input_ticker);
-            Console.WriteLine(price);
+            Console.WriteLine("");
+            Console.WriteLine($"Current Price: ${price}");
             Console.ReadLine();
-
         }
             
         private void ShowDetails()
         {
-            Console.WriteLine("Enter ticker: ");
+            Console.Clear();
+            Console.Write("Enter Ticker: ");
 
             string input_ticker = Console.ReadLine();
             var shareAPI = new ShareAPI();
             var result = shareAPI.GetShareInfo(input_ticker);
+            Console.WriteLine("");
             Console.WriteLine($"Time: {result.datetime} \n" +
-                $"Open: {result.open} \n" +
+                $"Open: ${result.open} \n" +
                 $"Volume: {result.volume} \n" +
-                $"Low: {result.low} \n" +
-                $"High: {result.high}");
+                $"Low: ${result.low} \n" +
+                $"High: ${result.high}");
             Console.ReadLine(); 
         }
     }
