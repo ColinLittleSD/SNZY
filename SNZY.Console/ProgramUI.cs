@@ -31,6 +31,7 @@ namespace SNZY_Console
                 Console.Clear();
 
                 Console.WriteLine("Welcome to SNZY\n" +
+                    " \n" +
                     "1. Show all Stocks\n" +
                     "2. Show all ETFs\n" +
                     "3. Show My Portfolio\n" +
@@ -133,13 +134,13 @@ namespace SNZY_Console
                 Console.Clear();
                 Console.WriteLine($"{portfolioName}\n");
 
-                Console.WriteLine("Portfolio menu: \n" +
+                Console.WriteLine("Portfolio Menu: \n" +
                     "1. View stocks\n" +
                     "2. View ETFs\n" +
-                    "3. Post a stock\n" +
-                    "4. Post an ETF\n" +
-                    "5. Delete a stock\n" +
-                    "6. Delete an ETF\n" +
+                    "3. Post A Stock\n" +
+                    "4. Post An ETF\n" +
+                    "5. Remove a Stock\n" +
+                    "6. Remove an ETF\n" +
                     "7. Back to main menu\n");
 
                 string input = Console.ReadLine();
@@ -368,12 +369,17 @@ namespace SNZY_Console
             string input_ticker = Console.ReadLine();
             var shareAPI = new ShareAPI();
             var result = shareAPI.GetShareInfo(input_ticker);
+
+            double open = double.Parse(result.open);
+            double close = double.Parse(result.close);
+
             Console.WriteLine("");
             Console.WriteLine($"Time: {result.datetime} \n" +
                 $"Open: ${result.open} \n" +
                 $"Volume: {result.volume} \n" +
                 $"Low: ${result.low} \n" +
-                $"High: ${result.high}");
+                $"High: ${result.high}\n" +
+                $"Percent Change: {(close - open) / close * 100}%");
             Console.ReadLine(); 
         }
     }
