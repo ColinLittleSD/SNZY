@@ -1,9 +1,5 @@
 # SNZY
 
-## Table Of Contents
-* Directions to Run Application
-* Resource Links
-
 ## SNZY Stock Information Application
 ### Purpose
 
