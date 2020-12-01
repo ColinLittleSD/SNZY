@@ -21,7 +21,7 @@ namespace SNZY.Services
 
         public async Task<ShareInfoModel> GetStockInfo(string ticker)
         {
-            string apiKey = "a6ae3f3429144b7fa3160c590b1c81b1";
+            string apiKey = "56885b95ab374bfba5284bf37ba5c869";
 
             var client = new RestClient($"https://api.twelvedata.com/time_series?symbol={ticker}&interval=1min&apikey={apiKey}&source=docs");
             client.Timeout = -1;
@@ -36,7 +36,7 @@ namespace SNZY.Services
 
         public async Task<SharePriceModel> GetStockPrice(string ticker)
         {
-            string apiKey = "a6ae3f3429144b7fa3160c590b1c81b1";
+            string apiKey = "56885b95ab374bfba5284bf37ba5c869";
 
             var client = new RestClient($"https://api.twelvedata.com/price?symbol={ticker}&apikey={apiKey}&source=docs");
             client.Timeout = -1;
