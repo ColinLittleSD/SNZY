@@ -43,8 +43,10 @@ namespace SNZY.Services
                     .Where(e => e.AuthorId == _userId)
                     .Select(e => new StockPortfolioListItem
                     {
+                        StockId = e.Stock.StockId,
                         StockName = e.Stock.StockName,
                         Ticker = e.Stock.Ticker
+
                     }).ToArrayAsync();
 
                 return query;
@@ -56,7 +58,7 @@ namespace SNZY.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var stockInPortfolio = ctx.StockPortfolios.Single(stock=> stock.StockId == id && stock.AuthorId == _userId);
+                var stockInPortfolio = ctx.StockPortfolios.FirstOrDefault(stock=> stock.StockId == id && stock.AuthorId == _userId);
 
                 ctx.StockPortfolios.Remove(stockInPortfolio);
 
