@@ -1,4 +1,7 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using SNZY.Models;
+using SNZY.Models.APIModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

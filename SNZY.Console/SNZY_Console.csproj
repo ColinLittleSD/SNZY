@@ -55,11 +55,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="ProgramUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShareAPI.cs" />
     <Compile Include="StockAPI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SNZY.Models\SNZY.Models.csproj">
+      <Project>{047E7CCA-9AB1-49B5-942C-2414E6628B94}</Project>
+      <Name>SNZY.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

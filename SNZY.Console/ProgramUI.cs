@@ -12,7 +12,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "bfoDf_5Nnrkk7Cc_B5xtG74FdhFTnPhOCEk4UQuvHdkKABdaFa_HUTOWKlMeuTE8Qf7k3sV-qY8BmaGgp9JInYfRyeUdU56ku35UhKJCr3Fch_7PKIdqnCVJ461N4algV7RSSw8CbuxM2iWWDxAma_2JF4W-DX4CHH78xN1ndc6ONHr1HExHAeHDIbdbf7vKoCygCR3W1rTi0rcL5CDCBpx7enjWKJntGUfdSZMRtOJ8PCDpDQNhOiOvorIZ3FMRyQdRXhTVtfBqDGo7oBY1R2nf3GDRsaQSlJOXd-sGf_oC_tKdQcjbjasaHB3JU9-3lT8-KtRpGQwlH5p3C6lXdfBiqwpVq2c-2SR6QpfLQttSlb8zcrMrUJuk_ZAfBjtPUka3X8d7Ebe-533SXcK496Elzu98kjl4QXzUxFELL59I09zNTEQ0HxW7bIakCdyb1vBzx3zteosRVvPeJ1L4s4nqTMqYqI8gfS6QGoKB9PM7qjunpNmkXXfngz0Jvrf1";
+        private static string AuthorizationKey = "btXey_MOdXIFTQMH2J81Cx-8ORrPc5e4h-aNQYtb9FciYs_PSXxz9cxOJJmt7wxqIV6OkPF9R1hQM4oQ1f65SScx_w8Q9z5H0rqpDEHqYMYRF7e1EHJ3ImFzNBlBJWSxTpanWKfcBBk3n095OE5CeF5vqcNPkKFc8QQsHJQTph1AslP2Lz_6EHwnVaDG_lME1A1cRjVcpOZs3fnj3RtnWXidoJmEw9MY8g4iYknUqGqSb37HQrG6bhyBvqtJuuFc95Se1meRl5Dx3aGh66F5XODiPH8Fk-i5NO6slRD5_dlYR7RniCEqky3gde1UmHInorOBNk4ERoCdwTPOITBly0GCG4zuEIalUaZ51-Qbqfrwr9ZP3leLx-6cHtIiZ2QvoqM-g_KQBB5VEjYENq9qfC9_WcEm25dQIWWtjNJECa65bfIwOSujJ19yKEklcbFFoytaqDdxAoGaZVawezIibz2iBSEd397fid7WEjSP4Go";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -74,12 +74,14 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength}   {"MarketCap",narrowPaddingLength}");
+            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}");
 
             foreach (var item in resultArray)
             {
-                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}  {item["Price"],narrowPaddingLength}  {item["MarketCap"],narrowPaddingLength}");
+                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}");
             }
+
+            DetailsMenu();
 
             Console.WriteLine("\nPress any key to return to main menu.");
             Console.ReadLine();
@@ -97,13 +99,15 @@ namespace SNZY_Console
             var result = etfAPI.GetAllETF();
             JArray resultArray = JArray.Parse(result);
 
-            Console.WriteLine($"{"ETFId",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
+            Console.WriteLine($"{"ETFId",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
             
             foreach(var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
-                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Price"],narrowPaddingLength} {item["Ticker"],narrowPaddingLength} ");
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} ");
             }
+
+            DetailsMenu();
 
             Console.WriteLine("\nPress any key to return to main menu.");
             Console.ReadLine();
@@ -306,6 +310,69 @@ namespace SNZY_Console
                 var HoldingsList = item["Holdings"];
                 Console.WriteLine($" {item["ETFName"],namePaddingLength}{item["Ticker"],narrowPaddingLength}");
             }
+        }
+
+        private void DetailsMenu()
+        {
+            bool continueToRun = true;
+
+            while (continueToRun)
+            {
+                
+
+                Console.WriteLine("What would you like to see?\n" +
+                    "1. Show Price\n" +
+                    "2. Show Details\n" +
+                    "3. Exit\n");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        ShowPrice();
+                        break;
+                    case "2":
+                        ShowDetails();
+                        break;
+                    case "3":
+                        continueToRun = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Invalid choice.\n");
+                        Console.WriteLine("Press any key to return to main menu.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        private void ShowPrice()
+        {
+            Console.WriteLine("Enter ticker: ");
+
+            string input_ticker = Console.ReadLine();
+            var shareAPI = new ShareAPI();
+            double price = shareAPI.GetSharePrice(input_ticker);
+            Console.WriteLine(price);
+            Console.ReadLine();
+
+        }
+            
+        private void ShowDetails()
+        {
+            Console.WriteLine("Enter ticker: ");
+
+            string input_ticker = Console.ReadLine();
+            var shareAPI = new ShareAPI();
+            var result = shareAPI.GetShareInfo(input_ticker);
+            Console.WriteLine($"Time: {result.datetime} \n" +
+                $"Open: {result.open} \n" +
+                $"Volume: {result.volume} \n" +
+                $"Low: {result.low} \n" +
+                $"High: {result.high}");
+            Console.ReadLine(); 
         }
     }
 }
