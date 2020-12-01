@@ -4,8 +4,14 @@
 * Directions to Run Application
 * Resource Links
 
-## Directions to Run Application
+## SNZY Stock Information Application
+### Purpose
 
+### Concept
+
+### Directions to Run Application
+
+### Future Plans
 
 ## Resource Links
 ### SNZY GitHub Repository
