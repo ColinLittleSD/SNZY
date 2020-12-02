@@ -13,7 +13,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "JreRxSSMYyGrFHDYLg_LOWcVcD6KEr-tSQnJ3RW_eVSFHrk1TAbVxGxfnjfM7FT0XIgabAGHhgKm43zgJhg9aJVlqky8b8pPpC3pvQN4hDEDZ3RaZwOgU6PmWJ0_DZukP0siQ-HuV8PZfUatkxXmFLEdeFVVV-hynjXE1xgYTVvXXhb0wfXEuhJpb0hug1LIY7mpF1zz5zZxxkKTWysf9Wk3DdXlzaOrhYepOWTa5h8roynl0zRrsKBNIPCKVE-M1WZBdWGTuqgBmJhgDjvFKbs1f2uMpONMmv1tZ8AW9esvg9IbYjXumGnTs9VkIiyXtD7CWNO2fGcNonE9v1xDRmfg5TmcAGxoe0HXa6AFVa90htiqIBeeIbFg-1VTekxaXiy67Xrznkquf099SSBz-ejHIocsonbY7kef0UtMW9X4Ch8S46ODKWOk6C9kJU7zm2lcrZszhdHLqWQHUP2XDlDxGxUbLz4jb82GIm1j7us";
+        private static string AuthorizationKey = "lhERvwylWQNfBL5jZ6v9PepDAAbn7GMs4tdd34Gv2K_pQtp4WdYuGBtBROoBQDyRypARreiRhu5xObNt8OSReyHTYrReVD6lii3IlnUwISHNcJ355RJW-vz151qq9bQo-0BFJZzPwMP-OhyJ5y8fso6IIccDTYFALCzr9fxfBgLCW6lwUTg9lbARxF4LUEu5Rec4P7N20s9tPEggHHOCO-lCJUmulFbLsfMGYdVo2rDmLZ7wKf51EpnliBspYjcokuspL7R1AUpe3HcHMV0ObcOCe8_4zb0z2Mf9NFMwoQc8zvnEsHMj0Kgb20nlM1Bcd9rjY82NorGrx2QUxSPwxA-CFXuRJpAkj0zp8xSINzWKPV5Eh7jPvKuDOefJafsaMrE_WGhoCzC-EbxgX5OttBx62qUdOsWbXfL1IzE3v8cqq3z5wUWGRBhYmZS56rhYvQC1ASup10CVzTAwjdVZEF6om3c1G4qc9L2nUhRWquM";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -430,11 +430,11 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"Stock ID",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
+            Console.WriteLine($"{"Stock ID",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}");
 
             foreach (var item in resultArray)
             {
-                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}  {item["Price"],narrowPaddingLength} ");
+                Console.WriteLine($"{item["StockId"],narrowPaddingLength} {item["StockName"],namePaddingLength}  {item["Ticker"],narrowPaddingLength}");
             }
         }
 
@@ -443,19 +443,15 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"ETF ID",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength} { "Holdings",narrowPaddingLength}");
+            Console.WriteLine($"{"ETF ID",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
 
-            List<string> listOfStockNames = new List<string>();
+            List<string> listOfETFNames = new List<string>();
 
             foreach (var item in resultArray)
             {
-                var HoldingsList = item["Holdings"];
-                foreach (var stock in HoldingsList)
-                {
-                    listOfStockNames.Add((string)stock["StockName"]);
-                }
-                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} {String.Join(", ", listOfStockNames),narrowPaddingLength}");
-                listOfStockNames.Clear();
+  
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["ETFName"],namePaddingLength} {item["Ticker"],narrowPaddingLength}");
+                listOfETFNames.Clear();
             }
         }
 
