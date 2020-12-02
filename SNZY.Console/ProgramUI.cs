@@ -12,7 +12,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "bfoDf_5Nnrkk7Cc_B5xtG74FdhFTnPhOCEk4UQuvHdkKABdaFa_HUTOWKlMeuTE8Qf7k3sV-qY8BmaGgp9JInYfRyeUdU56ku35UhKJCr3Fch_7PKIdqnCVJ461N4algV7RSSw8CbuxM2iWWDxAma_2JF4W-DX4CHH78xN1ndc6ONHr1HExHAeHDIbdbf7vKoCygCR3W1rTi0rcL5CDCBpx7enjWKJntGUfdSZMRtOJ8PCDpDQNhOiOvorIZ3FMRyQdRXhTVtfBqDGo7oBY1R2nf3GDRsaQSlJOXd-sGf_oC_tKdQcjbjasaHB3JU9-3lT8-KtRpGQwlH5p3C6lXdfBiqwpVq2c-2SR6QpfLQttSlb8zcrMrUJuk_ZAfBjtPUka3X8d7Ebe-533SXcK496Elzu98kjl4QXzUxFELL59I09zNTEQ0HxW7bIakCdyb1vBzx3zteosRVvPeJ1L4s4nqTMqYqI8gfS6QGoKB9PM7qjunpNmkXXfngz0Jvrf1";
+        private static string AuthorizationKey = "2QiJerB1o_6KKr1h17wll8dQo1gARyNwNllff5JZX20Rd3YzR4P2b3ur_15kQq6G-YUduceBq1drqw5I5NaijDIJsVORKkOLmOmE0uM_4t_VQp_6InueUc0PL-ipKjEd-Ls41I7AxPPc7udmCvLHRkvTEYTbAcjeBuJfsuuIllGWM-oJq3D9J42CopR-kAooJSjt1yxzk_gkoyjpLJHO8C_eWfzO7LIDBxTA0N7vF_sqj9lOU72DboTqRwHLxjJ1UMLUgw9DvT1sIydwgF72jlutiSvPCj7vT2SU5U3RUZMIhRvLh130O5z53jefdinBVijKFcKhEXRo198EI-GOTYYxshB3TUwgA7Uk2YBeXEWPfm7MpAETOd3m7TOSVD23yNBwXpOi3WbBRp6zcD9m1CZhyGU-EHfjBvI5Ss0LaPZLxV0kcvbyv7ioajhXVHVWRus12gI7Cc0opC2CSO6R-MUuCWLvVAVLv1YThoUyjkmXAN8YOBDqb-ZKvo2EJHe8";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -21,7 +21,8 @@ namespace SNZY_Console
         {
             Menu();
         }
-        
+
+        //Main menu
         private void Menu()
         {
             bool continueToRun = true;
@@ -31,6 +32,7 @@ namespace SNZY_Console
                 Console.Clear();
 
                 Console.WriteLine("Welcome to SNZY\n" +
+                    " \n" +
                     "1. Show all Stocks\n" +
                     "2. Show all ETFs\n" +
                     "3. Show My Portfolio\n" +
@@ -66,10 +68,28 @@ namespace SNZY_Console
         private void ShowAllStocks()
         {
             Console.Clear();
-            Console.WriteLine("Stocks: \n");
+            string loading = "Loading...";
+            Console.WriteLine(loading);
 
             var result = stockAPI.GetAllStocks();
-            JArray resultArray = JArray.Parse(result);
+            string listOfStockInJSON = result.responseContent;
+            string errorMessage = result.errorMessage;
+
+            //if there is an error message
+            if (errorMessage != "")
+            {
+                Console.Clear();
+                Console.WriteLine($"\n{errorMessage}");
+                Console.WriteLine("\nPress any key to return to main menu");
+                Console.ReadLine();
+                return;
+
+            }
+
+            Console.Clear();
+            Console.WriteLine("These are some examples of Stocks and their Tickers: \n");
+
+            JArray resultArray = JArray.Parse(listOfStockInJSON);
 
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
@@ -83,47 +103,87 @@ namespace SNZY_Console
 
             DetailsMenu();
 
-            Console.WriteLine("\nPress any key to return to main menu.");
-            Console.ReadLine();
         }
 
         //2. Show all ETF
         private void ShowAllETFS()
         {
             Console.Clear();
-            Console.WriteLine("ETFs: \n");
+            string loading = "Loading...";
+            Console.WriteLine(loading);
+
+            var result = etfAPI.GetAllETF();
+            string listOfETFsInJSON = result.responseContent;
+            string errorMessage = result.errorMessage;
+
+            //if there is an error message
+            if (errorMessage != "")
+            {
+                Console.Clear();
+                Console.WriteLine($"\n{errorMessage}");
+                Console.WriteLine("\nPress any key to return to main menu");
+                Console.ReadLine();
+                return;
+
+            }
+
+            Console.Clear();
+            Console.WriteLine("These are some examples of ETFs and their Tickers: \n");
 
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -40;
 
-            var result = etfAPI.GetAllETF();
-            JArray resultArray = JArray.Parse(result);
+            JArray resultArray = JArray.Parse(listOfETFsInJSON);
 
-            Console.WriteLine($"{"ETF ID",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
-            
-            foreach(var item in resultArray)
+            Console.WriteLine($"{"ETF ID",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength} { "Holdings",narrowPaddingLength}");
+
+            List<string> listOfStockNames = new List<string>();
+
+            foreach (var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
-                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} ");
+                foreach(var stock in HoldingsList)
+                {
+                    listOfStockNames.Add((string) stock["StockName"]);
+                }
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} {String.Join(", ", listOfStockNames), narrowPaddingLength}");
+                listOfStockNames.Clear();
             }
 
             DetailsMenu();
 
-            Console.WriteLine("\nPress any key to return to main menu.");
-            Console.ReadLine();
         }
 
         //3. Show my portfolio
         private void ShowPortfolio()
         {
+            Console.Clear();
+            string loading = "Loading...";
+            Console.WriteLine(loading);
+
             var result = portfolioAPI.GetAllPortfolio();
-            JArray resultArray = JArray.Parse(result);
+            string listOfPortfoliosInJSON = result.responseContent;
+            string errorMessage = result.errorMessage;
+
+            //if there is an error message
+            if (errorMessage != "")
+            {
+                Console.Clear();
+                Console.WriteLine($"\n{errorMessage}");
+                Console.WriteLine("\nPress any key to return to main menu");
+                Console.ReadLine();
+                return;
+
+            }
+            
+            JArray resultArray = JArray.Parse(listOfPortfoliosInJSON);
 
             string portfolioName = (string)resultArray[0]["Name"];
 
             PortfolioMenu(portfolioName);
         }
 
+        //Portfolio menu
         private void PortfolioMenu(string portfolioName)
         {
             bool continueToRun = true;
@@ -133,13 +193,13 @@ namespace SNZY_Console
                 Console.Clear();
                 Console.WriteLine($"{portfolioName}\n");
 
-                Console.WriteLine("Portfolio menu: \n" +
+                Console.WriteLine("Portfolio Menu: \n" +
                     "1. View stocks\n" +
                     "2. View ETFs\n" +
-                    "3. Post a stock\n" +
-                    "4. Post an ETF\n" +
-                    "5. Delete a stock\n" +
-                    "6. Delete an ETF\n" +
+                    "3. Post A Stock\n" +
+                    "4. Post An ETF\n" +
+                    "5. Remove a Stock\n" +
+                    "6. Remove an ETF\n" +
                     "7. Back to main menu\n");
 
                 string input = Console.ReadLine();
@@ -180,8 +240,28 @@ namespace SNZY_Console
         //1. View stocks
         private void ViewStockFromPortfolio()
         {
+            Console.Clear();
+            string loading = "Loading...";
+            Console.WriteLine(loading);
+
             var result = portfolioAPI.GetAllPortfolio();
-            JArray resultArray = JArray.Parse(result);
+            string listOfPortfoliosInJSON = result.responseContent;
+            string errorMessage = result.errorMessage;
+
+            //if there is an error message
+            if (errorMessage != "")
+            {
+                Console.Clear();
+                Console.WriteLine($"\n{errorMessage}");
+                Console.WriteLine("\nPress any key to return to main menu");
+                Console.ReadLine();
+                return;
+
+            }
+
+            Console.Clear();
+
+            JArray resultArray = JArray.Parse(listOfPortfoliosInJSON);
 
             Console.WriteLine("Porfolio Stocks");
             DisplayStockHelper((JArray)resultArray[0]["StocksInPortfolio"]);
@@ -194,9 +274,29 @@ namespace SNZY_Console
         //2. View ETFs
         private void ViewETFFromPortfolio()
         {
+            Console.Clear();
+            string loading = "Loading...";
+            Console.WriteLine(loading);
+
             var result = portfolioAPI.GetAllPortfolio();
-            JArray resultArray = JArray.Parse(result);
-            
+            string listOfPortfoliosInJSON = result.responseContent;
+            string errorMessage = result.errorMessage;
+
+            //if there is an error message
+            if (errorMessage != "")
+            {
+                Console.Clear();
+                Console.WriteLine($"\n{errorMessage}");
+                Console.WriteLine("\nPress any key to return to main menu");
+                Console.ReadLine();
+                return;
+
+            }
+
+            Console.Clear();
+
+            JArray resultArray = JArray.Parse(listOfPortfoliosInJSON);
+
             Console.WriteLine("Portfolio ETFs");
             DisplayETFHelper((JArray)resultArray[0]["ETFsInPortfolio"]);
 
@@ -214,7 +314,16 @@ namespace SNZY_Console
 
             if (int.TryParse(Console.ReadLine(), out input_StockId))
             {
-                portfolioAPI.PostAStockToMyPortfolio(1, input_StockId); ;
+                string errorMessage = portfolioAPI.PostAStockToMyPortfolio(1, input_StockId);
+
+                //if there is an error message
+                if (errorMessage != "")
+                {
+                    Console.WriteLine($"\n{errorMessage}");
+                    Console.WriteLine("\nPress any key to return to main menu");
+                    Console.ReadLine();
+                    return;
+                }
             }
             else
             {
@@ -234,7 +343,16 @@ namespace SNZY_Console
 
             if (int.TryParse(Console.ReadLine(), out input_ETFId))
             {
-                portfolioAPI.PostAETFToMyPortfolio(1, input_ETFId);
+                string errorMessage = portfolioAPI.PostAETFToMyPortfolio(1, input_ETFId);
+
+                //if there is an error message
+                if (errorMessage != "")
+                {
+                    Console.WriteLine($"\n{errorMessage}");
+                    Console.WriteLine("\nPress any key to return to main menu");
+                    Console.ReadLine();
+                    return;
+                }
             }
             else
             {
@@ -254,7 +372,16 @@ namespace SNZY_Console
 
             if (int.TryParse(Console.ReadLine(), out input_StockId))
             {
-                portfolioAPI.DeleteAStockFromMyPortfolio(input_StockId);
+                string errorMessage = portfolioAPI.DeleteAStockFromMyPortfolio(input_StockId);
+
+                //if there is an error message
+                if (errorMessage != "")
+                {
+                    Console.WriteLine($"\n{errorMessage}");
+                    Console.WriteLine("\nPress any key to return to main menu");
+                    Console.ReadLine();
+                    return;
+                }
             }
             else
             {
@@ -274,7 +401,16 @@ namespace SNZY_Console
 
             if (int.TryParse(Console.ReadLine(), out input_ETFId))
             {
-                portfolioAPI.DeleteETFFromMyPortfolio(input_ETFId);
+                string errorMessage = portfolioAPI.DeleteETFFromMyPortfolio(input_ETFId);
+
+                //if there is an error message
+                if (errorMessage != "")
+                {
+                    Console.WriteLine($"{errorMessage}");
+                    Console.WriteLine("\nPress any key to return to main menu");
+                    Console.ReadLine();
+                    return;
+                }
             }
             else
             {
@@ -303,12 +439,19 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"ETFId",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength} {"Price",narrowPaddingLength} {"Holding",narrowPaddingLength}");
+            Console.WriteLine($"{"ETF ID",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength} { "Holdings",narrowPaddingLength}");
+
+            List<string> listOfStockNames = new List<string>();
 
             foreach (var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
-                Console.WriteLine($" {item["ETFName"],namePaddingLength}{item["Ticker"],narrowPaddingLength}");
+                foreach (var stock in HoldingsList)
+                {
+                    listOfStockNames.Add((string)stock["StockName"]);
+                }
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} {String.Join(", ", listOfStockNames),narrowPaddingLength}");
+                listOfStockNames.Clear();
             }
         }
 
@@ -323,7 +466,7 @@ namespace SNZY_Console
                 Console.WriteLine("What would you like to see?\n" +
                     "1. Show Price\n" +
                     "2. Show Details\n" +
-                    "3. Exit\n");
+                    "3. Go back\n");
 
                 string input = Console.ReadLine();
 
@@ -351,30 +494,54 @@ namespace SNZY_Console
         private void ShowPrice()
         {
             Console.Clear();
+
             Console.Write("Enter Ticker: ");
             string input_ticker = Console.ReadLine();
+
             var shareAPI = new ShareAPI();
-            double price = shareAPI.GetSharePrice(input_ticker);
+            var stockResult = shareAPI.GetSharePrice(input_ticker);
+            double price = stockResult.price;
+            string errorMessage = stockResult.errorMessage;
+
+            if(errorMessage != "")
+            {
+                Console.WriteLine($"\n{errorMessage}");
+                return;
+
+            }
             Console.WriteLine("");
             Console.WriteLine($"Current Price: ${price}");
-            Console.ReadLine();
         }
-            
+
         private void ShowDetails()
         {
             Console.Clear();
-            Console.Write("Enter Ticker: ");
 
+            Console.Write("Enter Ticker: ");
             string input_ticker = Console.ReadLine();
+
             var shareAPI = new ShareAPI();
-            var result = shareAPI.GetShareInfo(input_ticker);
+            var etfResult = shareAPI.GetShareInfo(input_ticker);
+            var etfValue = etfResult.values;
+            string errorMessage = etfResult.errorMessage;
+
+            if (errorMessage != "")
+            {
+                Console.WriteLine($"\n{errorMessage}");
+                return;
+
+            }
+
+            double open = double.Parse(etfValue.open);
+            double close = double.Parse(etfValue.close);
+
             Console.WriteLine("");
-            Console.WriteLine($"Time: {result.datetime} \n" +
-                $"Open: ${result.open} \n" +
-                $"Volume: {result.volume} \n" +
-                $"Low: ${result.low} \n" +
-                $"High: ${result.high}");
-            Console.ReadLine(); 
+            Console.WriteLine($"Time: {etfValue.datetime} \n" +
+                $"Open: ${etfValue.open} \n" +
+                $"Volume: {etfValue.volume} \n" +
+                $"Low: ${etfValue.low} \n" +
+                $"High: ${etfValue.high}\n" +
+                $"Percent Change: {(close - open) / close * 100}%");
         }
     }
 }
