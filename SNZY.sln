@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNZY.Models", "SNZY.Models\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNZY.Services", "SNZY.Services\SNZY.Services.csproj", "{34E82FE6-0DE5-462E-A3AD-1B2562E1173A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNZY_Console", "SNZY.Console\SNZY_Console.csproj", "{4B5E5137-0432-4433-AD2F-D097BC62C39D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{34E82FE6-0DE5-462E-A3AD-1B2562E1173A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E82FE6-0DE5-462E-A3AD-1B2562E1173A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E82FE6-0DE5-462E-A3AD-1B2562E1173A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B5E5137-0432-4433-AD2F-D097BC62C39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B5E5137-0432-4433-AD2F-D097BC62C39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B5E5137-0432-4433-AD2F-D097BC62C39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B5E5137-0432-4433-AD2F-D097BC62C39D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

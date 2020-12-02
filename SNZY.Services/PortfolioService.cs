@@ -40,6 +40,8 @@ namespace SNZY.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
+                var service = new ShareAPIService();
+
                 var query = await ctx.Portfolios
                     .Where(port => port.AuthorId == _userId)
                     .Select(port => new PortfolioListItem
@@ -49,7 +51,7 @@ namespace SNZY.Services
                        
                         StocksInPortfolio = port.StocksInPortfolio.Select(stockport => new StockPortfolioListItem
                         {
-
+                            StockId = stockport.Stock.StockId,
                             StockName = stockport.Stock.StockName,
                             Ticker = stockport.Stock.Ticker
 
@@ -57,7 +59,7 @@ namespace SNZY.Services
 
                         ETFsInPortfolio = port.ETFInPortfolio.Select(etfPort => new ETFPortfolioListItem
                         {
-
+                            ETFId = etfPort.ETF.ETFId,
                             ETFName = etfPort.ETF.Name,
                             Ticker = etfPort.ETF.Ticker
                         }).ToList()

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SNZY.Models
 {
-    public class StockDetail
+    public class StockCreate
     {
-        public int StockId { get; set; }
+        [Required]
         public string StockName { get; set; }
+
+        [Required]
+        [MaxLength(5)]
+        [MinLength(1)]
         public string Ticker { get; set; }
-        public double Price { get; set; }
-        public double AverageVolume { get; set; }
-        public double MarketCap { get; set; }
+
     }
 }
