@@ -22,6 +22,11 @@ namespace SNZY.WebAPI.Controllers
             return postService;
         }
 
+        /// <summary>
+        /// Post a stock.
+        /// </summary>
+        /// <param name="stock">Stock Name and Stock Ticker</param>
+        /// <returns></returns>
         [Route("")]
         public async Task<IHttpActionResult> Post(StockCreate stock)
         {
@@ -36,6 +41,10 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get list of stocks.
+        /// </summary>
+        /// <returns>List of stocks</returns>
         [Route("")]
         public async Task<IHttpActionResult> Get()
         {
@@ -44,6 +53,11 @@ namespace SNZY.WebAPI.Controllers
             return Ok(posts);
         }
 
+        /// <summary>
+        /// Get real time stock information.
+        /// </summary>
+        /// <param name="ticker">Stock Ticker</param>
+        /// <returns>Real time stock information</returns>
         [Route("~/api/Stock/GetByTicker/")]
         public async Task<IHttpActionResult> GetStockByTicker(string ticker)
         {

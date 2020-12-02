@@ -31,6 +31,10 @@ namespace SNZY.WebAPI.Controllers
         }
 
         //GET /api/ETF
+        /// <summary>
+        /// Get a list of ETFs
+        /// </summary>
+        /// <returns>List of ETFs</returns>
         [Route("")]
         public async Task<IHttpActionResult> Get()
         {
@@ -40,6 +44,11 @@ namespace SNZY.WebAPI.Controllers
         }
 
         //POST /api/ETF
+        /// <summary>
+        /// Post an ETF
+        /// </summary>
+        /// <param name="etf">ETF Name, Ticker</param>
+        /// <returns></returns>
         [Route("")]
         public async Task<IHttpActionResult> Post(ETFCreate etf)
         {
@@ -59,6 +68,10 @@ namespace SNZY.WebAPI.Controllers
         }
 
         //GET /api/ETF/GetStocks
+        /// <summary>
+        /// Get ETF Holdings "list of stocks".
+        /// </summary>
+        /// <returns>List of Stocks that ETF holds</returns>
         [Route("~/api/ETF/GetStocks")]
         public async Task<IHttpActionResult> GetETF_Stocks()
         {
@@ -68,6 +81,11 @@ namespace SNZY.WebAPI.Controllers
         }
 
         //POST /api/ETF/PostStocks
+        /// <summary>
+        /// Post a stock to ETF Holdings "list of stocks"
+        /// </summary>
+        /// <param name="etf_stock">The stock Id and the ETF Id</param>
+        /// <returns></returns>
         [Route("~/api/ETF/PostStocks")]
         public async Task<IHttpActionResult> PostETF_Stocks(ETF_StockCreate etf_stock)
         {

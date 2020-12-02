@@ -38,6 +38,11 @@ namespace SNZY.WebAPI.Controllers
             return etfPortfolioService;
         }
 
+        /// <summary>
+        /// Post a new portfolio
+        /// </summary>
+        /// <param name="portfolio">Portfolio name</param>
+        /// <returns></returns>
         [Route("")]
         public async Task<IHttpActionResult> Post(PortfolioCreate portfolio)
         {
@@ -52,6 +57,10 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get Portfolio
+        /// </summary>
+        /// <returns></returns>
         [Route("")]
         public async Task<IHttpActionResult> Get()
         {
@@ -60,6 +69,10 @@ namespace SNZY.WebAPI.Controllers
             return Ok(posts);
         }
 
+        /// <summary>
+        /// Get list of stocks inside the portfolio
+        /// </summary>
+        /// <returns></returns>
         [Route("~/api/StockPortfolio/GetPortfolioStocks")]
         public async Task<IHttpActionResult> GetPortfolioStocks()
         {
@@ -68,6 +81,11 @@ namespace SNZY.WebAPI.Controllers
             return Ok(portstocks);
         }
 
+        /// <summary>
+        /// Post a stock to stock list inside the portfolio
+        /// </summary>
+        /// <param name="port">Stock Id, Portfolio Id</param>
+        /// <returns></returns>
         [Route("~/api/StockPortfolio/PostPortfolioStocks")]
         public async Task<IHttpActionResult> PostStockPortfolio(StockPortfolioCreate port)
         {
@@ -86,6 +104,10 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get a list of ETFs inside the porfolio
+        /// </summary>
+        /// <returns></returns>
         [Route("~/api/ETFPortfolio/GetPortfolioETFs")]
         public async Task<IHttpActionResult> GetPortfolioETFs()
         {
@@ -94,6 +116,11 @@ namespace SNZY.WebAPI.Controllers
             return Ok(portstocks);
         }
 
+        /// <summary>
+        /// Post an ETF to ETF list inside the portfolio
+        /// </summary>
+        /// <param name="etfPort">ETF Id and Portfolio Id</param>
+        /// <returns></returns>
         [Route("~/api/ETFPortfolio/PostPortfolioETFs")]
         public async Task<IHttpActionResult> PostETFPortfolio(ETFPortfolioCreate etfPort)
         {
@@ -112,7 +139,11 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
-        
+        /// <summary>
+        /// Remove an ETF from ETF list inside the portfolio
+        /// </summary>
+        /// <param name="id">The ETF Id to delete</param>
+        /// <returns></returns>
         [Route("~/api/ETFPortfolio/RemovePortfolioETFs/{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> RemoveETFFromPortfolio(int id)
@@ -125,6 +156,11 @@ namespace SNZY.WebAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Remove a Stock from Stock list inside the portfolio
+        /// </summary>
+        /// <param name="id">The stock Id to delete</param>
+        /// <returns></returns>
         [Route("~/api/StockPortfolio/RemovePortfolioStocks/{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> RemoveStocksFromPortfolio(int id)
