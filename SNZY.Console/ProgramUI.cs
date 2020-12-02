@@ -12,7 +12,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "2QiJerB1o_6KKr1h17wll8dQo1gARyNwNllff5JZX20Rd3YzR4P2b3ur_15kQq6G-YUduceBq1drqw5I5NaijDIJsVORKkOLmOmE0uM_4t_VQp_6InueUc0PL-ipKjEd-Ls41I7AxPPc7udmCvLHRkvTEYTbAcjeBuJfsuuIllGWM-oJq3D9J42CopR-kAooJSjt1yxzk_gkoyjpLJHO8C_eWfzO7LIDBxTA0N7vF_sqj9lOU72DboTqRwHLxjJ1UMLUgw9DvT1sIydwgF72jlutiSvPCj7vT2SU5U3RUZMIhRvLh130O5z53jefdinBVijKFcKhEXRo198EI-GOTYYxshB3TUwgA7Uk2YBeXEWPfm7MpAETOd3m7TOSVD23yNBwXpOi3WbBRp6zcD9m1CZhyGU-EHfjBvI5Ss0LaPZLxV0kcvbyv7ioajhXVHVWRus12gI7Cc0opC2CSO6R-MUuCWLvVAVLv1YThoUyjkmXAN8YOBDqb-ZKvo2EJHe8";
+        private static string AuthorizationKey = "EGhTJlHm176yMPMqWka_e5rhMUOk1ekJRNO3BVrScOSS3Lw5-ei8DvPPWAwzB_F9O-OLQKiqWXxp4y5utZPdrXpLtdbLAcGbFP01flin1r43u-rj2YV8aKmJut6i2B8u87vhhYFXRSGO3Rw6SE-EQGMhrBSTwe9pb4amIULz189xQycZGGhEhjdVgwDTGk1jQZzPEpvHOMN9KvUX6JM3vt8VaBh3K_4RMPKXLRbqfe64Wbbyc-T0WWBtwUW46KtpxQfRa_a0i0DprzdGRjBhz6gyZrkeyGTOQmzg08wAjgzWXgf2KZrql_JjM2vgh8-Qc0o9YCPX8w4E0Kb85E5j9fvTXSSxmgsMQgO0EeStYKiNolaWcH3AQ3IC0rTpQGdR-FkdweDKqTeJ_DZKQd8ACp6Y93Nt1DGSUEvwNWcHlwAjeF56qQwcq8WrtS39_087cRO8jRSGGsE22D0yl4-JiiIPo6FJpJvBA9qRuVrf9bY";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
