@@ -33,6 +33,8 @@ Once you have the authorization key, you can POST stocks and ETFs to Postman, as
 * Remove Stocks from Portfolio - api/StockPortfolio/RemovePortfolioStocks/{id}
 * Remove ETFs from Portfolio - api/ETFPortfolio/RemovePortfolioETFs/{id}
 
+#### The Console
+The console is pretty straight forward! Play around with it to discover the services it provides. You can type in any ticker for a stock or ETF to get the prices and details. This will allow you to see real time data, the important information for a trader.
 ### Future Plans
 We would like to expand the functionality of the console, by allowing the user to have more power to control their portfolio. Using parameters, buy/hold/sell suggestions can be added for each ticker searched.
 
