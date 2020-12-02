@@ -529,7 +529,6 @@ namespace SNZY_Console
             {
                 Console.WriteLine($"\n{errorMessage}");
                 return;
-
             }
 
             double open = double.Parse(etfValue.open);
