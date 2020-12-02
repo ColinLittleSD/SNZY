@@ -43,6 +43,7 @@ namespace SNZY.Services
                     .Where(e => e.AuthorId == _userId)
                     .Select(e => new ETFPortfolioListItem
                     {
+                        ETFId = e.ETF.ETFId,
                         ETFName = e.ETF.Name,
                         Ticker = e.ETF.Ticker
                     }).ToArrayAsync();
@@ -55,7 +56,7 @@ namespace SNZY.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var etfInPortfolio =  ctx.ETFPortfolios.Single(etf => etf.ETFId == id && etf.AuthorId == _userId);
+                var etfInPortfolio =  ctx.ETFPortfolios.FirstOrDefault(etf => etf.ETFId == id && etf.AuthorId == _userId);
 
                 ctx.ETFPortfolios.Remove(etfInPortfolio);
 

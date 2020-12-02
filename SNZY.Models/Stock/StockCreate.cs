@@ -17,14 +17,5 @@ namespace SNZY.Models
         [MinLength(1)]
         public string Ticker { get; set; }
 
-        [Required]
-        public double Price { get; set; }
-
-        [Required]
-        public double AverageVolume { get; set; }
-
-        [Required]
-        public double MarketCap { get; set; }
-
     }
 }

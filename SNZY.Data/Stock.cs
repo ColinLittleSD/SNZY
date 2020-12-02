@@ -23,17 +23,6 @@ namespace SNZY.Data
         public string Ticker { get; set; }
 
         [Required]
-        public double Price { get; set; }
-
-        [Required]
-        [Display(Name = "Average Volume")]
-        public double AverageVolume { get; set; }
-
-        [Required]
-        [Display(Name = "Market Cap")]
-        public double MarketCap { get; set; }
-
-        [Required]
         public Guid AuthorId { get; set; }
     }
 }

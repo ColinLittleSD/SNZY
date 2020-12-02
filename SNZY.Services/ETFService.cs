@@ -26,8 +26,7 @@ namespace SNZY.Services
             {
                 AuthorId = _userId,
                 Name = model.Name,
-                Ticker = model.Ticker,
-                Price = model.Price
+                Ticker = model.Ticker
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -48,8 +47,6 @@ namespace SNZY.Services
                         ETFId = etf.ETFId,
                         Name = etf.Name,
                         Ticker = etf.Ticker,
-                        Price = etf.Price,
-
                         Holdings = etf.Holdings.Select(stock => new ETF_StockListItem
                         {
                             StockId = stock.StockId,

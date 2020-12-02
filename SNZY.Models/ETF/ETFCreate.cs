@@ -15,7 +15,5 @@ namespace SNZY.Models.ETF
         [Required]
         public string Ticker { get; set; }
 
-        [Required]
-        public decimal Price { get; set; }
     }
 }

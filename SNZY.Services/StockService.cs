@@ -26,10 +26,7 @@ namespace SNZY.Services
                 {
                     AuthorId = _userId,
                     StockName = model.StockName,
-                    Ticker = model.Ticker,
-                    Price = model.Price,
-                    AverageVolume = model.AverageVolume,
-                    MarketCap = model.MarketCap
+                    Ticker = model.Ticker
                 };
 
             using (var ctx = new ApplicationDbContext())
@@ -54,9 +51,6 @@ namespace SNZY.Services
                                     StockId = stock.StockId,
                                     StockName = stock.StockName,
                                     Ticker = stock.Ticker,
-                                    Price = stock.Price,
-                                    AverageVolume = stock.AverageVolume,
-                                    MarketCap = stock.MarketCap
                                 }
                         ).ToArrayAsync();
 
@@ -90,7 +84,6 @@ namespace SNZY.Services
                         StockName = n.StockName,
                         Ticker = n.Ticker,
                         Price = price,
-                        MarketCap = n.MarketCap,
                         Datetime = datetime,
                         Open = open,
                         High = high,

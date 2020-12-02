@@ -59,7 +59,7 @@ namespace SNZY.Services
 
                         ETFsInPortfolio = port.ETFInPortfolio.Select(etfPort => new ETFPortfolioListItem
                         {
-
+                            ETFId = etfPort.ETF.ETFId,
                             ETFName = etfPort.ETF.Name,
                             Ticker = etfPort.ETF.Ticker
                         }).ToList()

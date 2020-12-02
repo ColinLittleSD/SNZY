@@ -25,9 +25,6 @@ namespace SNZY.Data
         [MaxLength(5)]
         public string Ticker { get; set; }
 
-        [Required]
-        public decimal Price { get; set; }
-
         public virtual List<ETF_Stock> Holdings { get; set; } = new List<ETF_Stock>();
 
     }

@@ -8,6 +8,7 @@ namespace SNZY.Models.ETFPortfolio
 {
     public class ETFPortfolioListItem
     {
+        public int ETFId { get; set; }
         public string ETFName { get; set; }
         public string Ticker { get; set; }
     }
