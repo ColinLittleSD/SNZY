@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using SNZY.Console;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "EGhTJlHm176yMPMqWka_e5rhMUOk1ekJRNO3BVrScOSS3Lw5-ei8DvPPWAwzB_F9O-OLQKiqWXxp4y5utZPdrXpLtdbLAcGbFP01flin1r43u-rj2YV8aKmJut6i2B8u87vhhYFXRSGO3Rw6SE-EQGMhrBSTwe9pb4amIULz189xQycZGGhEhjdVgwDTGk1jQZzPEpvHOMN9KvUX6JM3vt8VaBh3K_4RMPKXLRbqfe64Wbbyc-T0WWBtwUW46KtpxQfRa_a0i0DprzdGRjBhz6gyZrkeyGTOQmzg08wAjgzWXgf2KZrql_JjM2vgh8-Qc0o9YCPX8w4E0Kb85E5j9fvTXSSxmgsMQgO0EeStYKiNolaWcH3AQ3IC0rTpQGdR-FkdweDKqTeJ_DZKQd8ACp6Y93Nt1DGSUEvwNWcHlwAjeF56qQwcq8WrtS39_087cRO8jRSGGsE22D0yl4-JiiIPo6FJpJvBA9qRuVrf9bY";
+        private static string AuthorizationKey = "2QiJerB1o_6KKr1h17wll8dQo1gARyNwNllff5JZX20Rd3YzR4P2b3ur_15kQq6G-YUduceBq1drqw5I5NaijDIJsVORKkOLmOmE0uM_4t_VQp_6InueUc0PL-ipKjEd-Ls41I7AxPPc7udmCvLHRkvTEYTbAcjeBuJfsuuIllGWM-oJq3D9J42CopR-kAooJSjt1yxzk_gkoyjpLJHO8C_eWfzO7LIDBxTA0N7vF_sqj9lOU72DboTqRwHLxjJ1UMLUgw9DvT1sIydwgF72jlutiSvPCj7vT2SU5U3RUZMIhRvLh130O5z53jefdinBVijKFcKhEXRo198EI-GOTYYxshB3TUwgA7Uk2YBeXEWPfm7MpAETOd3m7TOSVD23yNBwXpOi3WbBRp6zcD9m1CZhyGU-EHfjBvI5Ss0LaPZLxV0kcvbyv7ioajhXVHVWRus12gI7Cc0opC2CSO6R-MUuCWLvVAVLv1YThoUyjkmXAN8YOBDqb-ZKvo2EJHe8";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -23,6 +24,7 @@ namespace SNZY_Console
         }
 
         //Main menu
+
         private void Menu()
         {
             bool continueToRun = true;
@@ -135,6 +137,7 @@ namespace SNZY_Console
 
             JArray resultArray = JArray.Parse(listOfETFsInJSON);
 
+            Console.WriteLine($"{"ETF ID",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
             Console.WriteLine($"{"ETF ID",narrowPaddingLength} {"Name",namePaddingLength} {"Ticker",narrowPaddingLength} { "Holdings",narrowPaddingLength}");
 
             List<string> listOfStockNames = new List<string>();
@@ -279,6 +282,8 @@ namespace SNZY_Console
             Console.WriteLine(loading);
 
             var result = portfolioAPI.GetAllPortfolio();
+            JArray resultArray = JArray.Parse(result);
+
             string listOfPortfoliosInJSON = result.responseContent;
             string errorMessage = result.errorMessage;
 
@@ -496,29 +501,46 @@ namespace SNZY_Console
             Console.Clear();
 
             Console.Write("Enter Ticker: ");
-            string input_ticker = Console.ReadLine();
-
+            string input_ticker = (Console.ReadLine()).ToUpper();
             var shareAPI = new ShareAPI();
             var stockResult = shareAPI.GetSharePrice(input_ticker);
             double price = stockResult.price;
             string errorMessage = stockResult.errorMessage;
+            double open = double.Parse(result.open);
+            string input_ticker = Console.ReadLine();
 
             if(errorMessage != "")
             {
                 Console.WriteLine($"\n{errorMessage}");
                 return;
 
+            }  
+          Console.Clear();
+            Console.WriteLine($" \n" +
+                $"{ input_ticker}");
+
+            if (price > open)
+            {
+                Console.WriteLine($"Current Price: ${Math.Round(price,2)} \n" +
+                    $"The price of {input_ticker} has gone up since the open this morning!", Console.ForegroundColor = ConsoleColor.Green);
+               
             }
-            Console.WriteLine("");
-            Console.WriteLine($"Current Price: ${price}");
+            else
+            {
+                Console.WriteLine($"Current Price: ${Math.Round(price, 2)} \n" +
+                    $"The price of {input_ticker} has gone down since the open this morning.", Console.ForegroundColor = ConsoleColor.Red);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadLine();
         }
 
         private void ShowDetails()
         {
             Console.Clear();
-
             Console.Write("Enter Ticker: ");
-            string input_ticker = Console.ReadLine();
+            
+
+            string input_ticker = (Console.ReadLine()).ToUpper();
 
             var shareAPI = new ShareAPI();
             var etfResult = shareAPI.GetShareInfo(input_ticker);
@@ -531,16 +553,36 @@ namespace SNZY_Console
                 return;
             }
 
+            double open = double.Parse(etfResult.open);
+            double close = double.Parse(etfResult.close);
+            double low = double.Parse(etfResult.low);
+            double high = double.Parse(etfResult.high);
+            DateTime dateTime = DateTime.Parse(etfResult.datetime);
+            double percentChange = (close - open) / close * 100;
+
             double open = double.Parse(etfValue.open);
             double close = double.Parse(etfValue.close);
 
+            Console.Clear();
             Console.WriteLine("");
-            Console.WriteLine($"Time: {etfValue.datetime} \n" +
-                $"Open: ${etfValue.open} \n" +
-                $"Volume: {etfValue.volume} \n" +
-                $"Low: ${etfValue.low} \n" +
-                $"High: ${etfValue.high}\n" +
-                $"Percent Change: {(close - open) / close * 100}%");
+
+            Console.WriteLine($"{input_ticker} \n" +
+                $"Time: {dateTime.ToString("dddd, MM/dd/yyy HH:mm tt")} \n" +
+                $"Open: ${Math.Round(open, 2)} \n" +
+                $"Volume: {result.volume}/shares per minute \n" +
+                $"Low: ${Math.Round(low, 2)} \n" +
+                $"High: ${Math.Round(high,2)}");
+
+            if (percentChange < 0)
+            {
+                Console.WriteLine($"{input_ticker} has gone down {Math.Round(percentChange, 4)}% since the open this morning.", Console.ForegroundColor = ConsoleColor.Red);
+            }
+            else
+            {
+                Console.WriteLine($"{input_ticker} has gone up {Math.Round(percentChange, 4)}% since the open this morning!", Console.ForegroundColor = ConsoleColor.Green);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadLine();
         }
     }
 }
