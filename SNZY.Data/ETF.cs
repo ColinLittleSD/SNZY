@@ -19,6 +19,8 @@ namespace SNZY.Data
         public string Name { get; set; }
 
         [Required]
+        [MinLength(1)]
+        [MaxLength(5)]
         public string Ticker { get; set; }
 
         [Required]
