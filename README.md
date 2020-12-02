@@ -14,21 +14,21 @@ Once you have the authorization key, you can POST stocks and ETFs to Postman, as
 
 #### The Stocks Requests, Routes, and Keys are as follows:
 
-Post Stock - https://localhost:{hostnumber}/api/Stock - StockName / Ticker
-Get Stock - https://localhost:{hostnumber}/api/Stock/
-Get Stock By Ticker (will return real-time data on the stock) - https://localhost:{hostnumber/api/Stock/GetByTicker?ticker={ticker}
-Post Stock In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/PostPortfolioStocks - 
-Get Stocks In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/GetPortfolioStocks
+* Post Stock - https://localhost:{hostnumber}/api/Stock - StockName / Ticker
+* Get Stock - https://localhost:{hostnumber}/api/Stock/
+* Get Stock By Ticker (will return real-time data on the stock) - https://localhost:{hostnumber/api/Stock/GetByTicker?ticker={ticker}
+* Post Stock In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/PostPortfolioStocks - 
+* Get Stocks In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/GetPortfolioStocks
 
 #### The ETF Requests and Routes are as follows:
-Post ETF - https://localhost:{hostnumber}/api/ETF/ - Name / Ticker
-Get ETF - https://localhost:{hostnumber}/api/ETF/
-Post ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/PostPortfolioETFs - ETFId / PortfolioId
-Get ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/GetPortfolioETFs
+* Post ETF - https://localhost:{hostnumber}/api/ETF/ - Name / Ticker
+* Get ETF - https://localhost:{hostnumber}/api/ETF/
+* Post ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/PostPortfolioETFs - ETFId / PortfolioId
+* Get ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/GetPortfolioETFs
 
 #### The Portfolio Requests and Routes are as follows:
-Post Portfolio - https://localhost:{hostnumber}/api/Portfolio - Name
-Get Portfolio - https://localhost:{hostnumber}/api/Portfolio
+* Post Portfolio - https://localhost:{hostnumber}/api/Portfolio - Name
+* Get Portfolio - https://localhost:{hostnumber}/api/Portfolio
 
 
 
