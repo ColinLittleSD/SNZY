@@ -10,12 +10,14 @@ namespace SNZY.Data
     public class ETF
     {
         [Key]
+        [Display(Name = "ETF ID")]
         public int ETFId { get; set; }
 
         [Required]
         public Guid AuthorId { get; set; }
 
         [Required]
+        [Display(Name = "ETF Name")]
         public string Name { get; set; }
 
         [Required]

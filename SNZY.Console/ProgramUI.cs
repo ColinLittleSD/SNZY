@@ -13,7 +13,7 @@ namespace SNZY_Console
     public class ProgramUI
     {
         //Change this to your authorization key
-        private static string AuthorizationKey = "2QiJerB1o_6KKr1h17wll8dQo1gARyNwNllff5JZX20Rd3YzR4P2b3ur_15kQq6G-YUduceBq1drqw5I5NaijDIJsVORKkOLmOmE0uM_4t_VQp_6InueUc0PL-ipKjEd-Ls41I7AxPPc7udmCvLHRkvTEYTbAcjeBuJfsuuIllGWM-oJq3D9J42CopR-kAooJSjt1yxzk_gkoyjpLJHO8C_eWfzO7LIDBxTA0N7vF_sqj9lOU72DboTqRwHLxjJ1UMLUgw9DvT1sIydwgF72jlutiSvPCj7vT2SU5U3RUZMIhRvLh130O5z53jefdinBVijKFcKhEXRo198EI-GOTYYxshB3TUwgA7Uk2YBeXEWPfm7MpAETOd3m7TOSVD23yNBwXpOi3WbBRp6zcD9m1CZhyGU-EHfjBvI5Ss0LaPZLxV0kcvbyv7ioajhXVHVWRus12gI7Cc0opC2CSO6R-MUuCWLvVAVLv1YThoUyjkmXAN8YOBDqb-ZKvo2EJHe8";
+        private static string AuthorizationKey = "JreRxSSMYyGrFHDYLg_LOWcVcD6KEr-tSQnJ3RW_eVSFHrk1TAbVxGxfnjfM7FT0XIgabAGHhgKm43zgJhg9aJVlqky8b8pPpC3pvQN4hDEDZ3RaZwOgU6PmWJ0_DZukP0siQ-HuV8PZfUatkxXmFLEdeFVVV-hynjXE1xgYTVvXXhb0wfXEuhJpb0hug1LIY7mpF1zz5zZxxkKTWysf9Wk3DdXlzaOrhYepOWTa5h8roynl0zRrsKBNIPCKVE-M1WZBdWGTuqgBmJhgDjvFKbs1f2uMpONMmv1tZ8AW9esvg9IbYjXumGnTs9VkIiyXtD7CWNO2fGcNonE9v1xDRmfg5TmcAGxoe0HXa6AFVa90htiqIBeeIbFg-1VTekxaXiy67Xrznkquf099SSBz-ejHIocsonbY7kef0UtMW9X4Ch8S46ODKWOk6C9kJU7zm2lcrZszhdHLqWQHUP2XDlDxGxUbLz4jb82GIm1j7us";
         private readonly PortfolioAPI portfolioAPI = new PortfolioAPI(AuthorizationKey);
         private readonly StockAPI stockAPI = new StockAPI(AuthorizationKey);
         private readonly ETFAPI etfAPI = new ETFAPI(AuthorizationKey);
@@ -89,6 +89,7 @@ namespace SNZY_Console
             }
 
             Console.Clear();
+            Console.WriteLine("");
             Console.WriteLine("These are some examples of Stocks and their Tickers: \n");
 
             JArray resultArray = JArray.Parse(listOfStockInJSON);
@@ -145,11 +146,11 @@ namespace SNZY_Console
             foreach (var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
-                foreach(var stock in HoldingsList)
+                foreach (var stock in HoldingsList)
                 {
-                    listOfStockNames.Add((string) stock["StockName"]);
+                    listOfStockNames.Add((string)stock["StockName"]);
                 }
-                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} {String.Join(", ", listOfStockNames), narrowPaddingLength}");
+                Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} {String.Join(", ", listOfStockNames),narrowPaddingLength}");
                 listOfStockNames.Clear();
             }
 
@@ -178,7 +179,7 @@ namespace SNZY_Console
                 return;
 
             }
-            
+
             JArray resultArray = JArray.Parse(listOfPortfoliosInJSON);
 
             string portfolioName = (string)resultArray[0]["Name"];
@@ -266,7 +267,7 @@ namespace SNZY_Console
 
             JArray resultArray = JArray.Parse(listOfPortfoliosInJSON);
 
-            Console.WriteLine("Porfolio Stocks");
+            Console.WriteLine("Portfolio Stocks");
             DisplayStockHelper((JArray)resultArray[0]["StocksInPortfolio"]);
 
             Console.WriteLine("\nPress any key to return to portfolio menu");
@@ -282,8 +283,6 @@ namespace SNZY_Console
             Console.WriteLine(loading);
 
             var result = portfolioAPI.GetAllPortfolio();
-            JArray resultArray = JArray.Parse(result);
-
             string listOfPortfoliosInJSON = result.responseContent;
             string errorMessage = result.errorMessage;
 
@@ -431,7 +430,7 @@ namespace SNZY_Console
             const int narrowPaddingLength = -10;
             const int namePaddingLength = -30;
 
-            Console.WriteLine($"{"StockId",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
+            Console.WriteLine($"{"Stock ID",narrowPaddingLength} {"Name",namePaddingLength}  {"Ticker",narrowPaddingLength}  {"Price",narrowPaddingLength} ");
 
             foreach (var item in resultArray)
             {
@@ -503,27 +502,29 @@ namespace SNZY_Console
             Console.Write("Enter Ticker: ");
             string input_ticker = (Console.ReadLine()).ToUpper();
             var shareAPI = new ShareAPI();
-            var stockResult = shareAPI.GetSharePrice(input_ticker);
-            double price = stockResult.price;
-            string errorMessage = stockResult.errorMessage;
-            double open = double.Parse(result.open);
-            string input_ticker = Console.ReadLine();
+            var priceResult = shareAPI.GetSharePrice(input_ticker);
+            var infoResult = shareAPI.GetShareInfo(input_ticker);
+            double price = priceResult.price;
+            var values = infoResult.values;
+            
+            string errorMessage = priceResult.errorMessage;
 
-            if(errorMessage != "")
+            if (errorMessage != "")
             {
                 Console.WriteLine($"\n{errorMessage}");
                 return;
 
-            }  
-          Console.Clear();
+            }
+            double open = double.Parse(values.open);
+            Console.Clear();
             Console.WriteLine($" \n" +
                 $"{ input_ticker}");
 
             if (price > open)
             {
-                Console.WriteLine($"Current Price: ${Math.Round(price,2)} \n" +
+                Console.WriteLine($"Current Price: ${Math.Round(price, 2)} \n" +
                     $"The price of {input_ticker} has gone up since the open this morning!", Console.ForegroundColor = ConsoleColor.Green);
-               
+
             }
             else
             {
@@ -538,14 +539,11 @@ namespace SNZY_Console
         {
             Console.Clear();
             Console.Write("Enter Ticker: ");
-            
-
             string input_ticker = (Console.ReadLine()).ToUpper();
-
             var shareAPI = new ShareAPI();
-            var etfResult = shareAPI.GetShareInfo(input_ticker);
-            var etfValue = etfResult.values;
-            string errorMessage = etfResult.errorMessage;
+            var infoResult = shareAPI.GetShareInfo(input_ticker);
+            var values = infoResult.values;
+            string errorMessage = infoResult.errorMessage;
 
             if (errorMessage != "")
             {
@@ -553,15 +551,12 @@ namespace SNZY_Console
                 return;
             }
 
-            double open = double.Parse(etfResult.open);
-            double close = double.Parse(etfResult.close);
-            double low = double.Parse(etfResult.low);
-            double high = double.Parse(etfResult.high);
-            DateTime dateTime = DateTime.Parse(etfResult.datetime);
+            double open = double.Parse(values.open);
+            double close = double.Parse(values.close);
+            double low = double.Parse(values.low);
+            double high = double.Parse(values.high);
+            DateTime dateTime = DateTime.Parse(values.datetime);
             double percentChange = (close - open) / close * 100;
-
-            double open = double.Parse(etfValue.open);
-            double close = double.Parse(etfValue.close);
 
             Console.Clear();
             Console.WriteLine("");
@@ -569,9 +564,9 @@ namespace SNZY_Console
             Console.WriteLine($"{input_ticker} \n" +
                 $"Time: {dateTime.ToString("dddd, MM/dd/yyy HH:mm tt")} \n" +
                 $"Open: ${Math.Round(open, 2)} \n" +
-                $"Volume: {result.volume}/shares per minute \n" +
+                $"Volume: {values.volume}/shares per minute \n" +
                 $"Low: ${Math.Round(low, 2)} \n" +
-                $"High: ${Math.Round(high,2)}");
+                $"High: ${Math.Round(high, 2)}");
 
             if (percentChange < 0)
             {

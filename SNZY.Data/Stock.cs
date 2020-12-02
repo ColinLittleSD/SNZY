@@ -10,9 +10,11 @@ namespace SNZY.Data
     public class Stock
     {
         [Key]
+        [Display(Name = "Stock ID")]
         public int StockId { get; set; }
 
         [Required]
+        [Display(Name ="Stock Name")]
         public string StockName { get; set; }
 
         [Required]
@@ -24,9 +26,11 @@ namespace SNZY.Data
         public double Price { get; set; }
 
         [Required]
+        [Display(Name = "Average Volume")]
         public double AverageVolume { get; set; }
 
         [Required]
+        [Display(Name = "Market Cap")]
         public double MarketCap { get; set; }
 
         [Required]
