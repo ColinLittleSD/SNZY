@@ -3,6 +3,7 @@ using RestSharp;
 using SNZY.Console;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SNZY_Console
         {
             Menu();
         }
-        
+
         private void Menu()
         {
             bool continueToRun = true;
@@ -101,8 +102,8 @@ namespace SNZY_Console
             JArray resultArray = JArray.Parse(result);
 
             Console.WriteLine($"{"ETF ID",narrowPaddingLength}  {"Name",namePaddingLength} {"Ticker",narrowPaddingLength}");
-            
-            foreach(var item in resultArray)
+
+            foreach (var item in resultArray)
             {
                 var HoldingsList = item["Holdings"];
                 Console.WriteLine($"{item["ETFId"],narrowPaddingLength} {item["Name"],namePaddingLength} {item["Ticker"],narrowPaddingLength} ");
@@ -197,7 +198,7 @@ namespace SNZY_Console
         {
             var result = portfolioAPI.GetAllPortfolio();
             JArray resultArray = JArray.Parse(result);
-            
+
             Console.WriteLine("Portfolio ETFs");
             DisplayETFHelper((JArray)resultArray[0]["ETFsInPortfolio"]);
 
@@ -353,34 +354,66 @@ namespace SNZY_Console
         {
             Console.Clear();
             Console.Write("Enter Ticker: ");
-            string input_ticker = Console.ReadLine();
+            string input_ticker = (Console.ReadLine()).ToUpper();
             var shareAPI = new ShareAPI();
             double price = shareAPI.GetSharePrice(input_ticker);
-            Console.WriteLine("");
-            Console.WriteLine($"Current Price: ${price}");
+            var result = shareAPI.GetShareInfo(input_ticker);
+            double open = double.Parse(result.open);
+            Console.Clear();
+            Console.WriteLine($" \n" +
+                $"{ input_ticker}");
+
+            if (price > open)
+            {
+                Console.WriteLine($"Current Price: ${Math.Round(price,2)} \n" +
+                    $"The price of {input_ticker} has gone up since the open this morning!", Console.ForegroundColor = ConsoleColor.Green);
+               
+            }
+            else
+            {
+                Console.WriteLine($"Current Price: ${Math.Round(price, 2)} \n" +
+                    $"The price of {input_ticker} has gone down since the open this morning.", Console.ForegroundColor = ConsoleColor.Red);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.ReadLine();
         }
-            
+
         private void ShowDetails()
         {
             Console.Clear();
             Console.Write("Enter Ticker: ");
+            
 
-            string input_ticker = Console.ReadLine();
+            string input_ticker = (Console.ReadLine()).ToUpper();
             var shareAPI = new ShareAPI();
             var result = shareAPI.GetShareInfo(input_ticker);
 
             double open = double.Parse(result.open);
             double close = double.Parse(result.close);
+            double low = double.Parse(result.low);
+            double high = double.Parse(result.high);
+            DateTime dateTime = DateTime.Parse(result.datetime);
+            double percentChange = (close - open) / close * 100;
 
+            Console.Clear();
             Console.WriteLine("");
-            Console.WriteLine($"Time: {result.datetime} \n" +
-                $"Open: ${result.open} \n" +
-                $"Volume: {result.volume} \n" +
-                $"Low: ${result.low} \n" +
-                $"High: ${result.high}\n" +
-                $"Percent Change: {(close - open) / close * 100}%");
-            Console.ReadLine(); 
+            Console.WriteLine($"{input_ticker} \n" +
+                $"Time: {dateTime.ToString("dddd, MM/dd/yyy HH:mm tt")} \n" +
+                $"Open: ${Math.Round(open, 2)} \n" +
+                $"Volume: {result.volume}/shares per minute \n" +
+                $"Low: ${Math.Round(low, 2)} \n" +
+                $"High: ${Math.Round(high,2)}");
+
+            if (percentChange < 0)
+            {
+                Console.WriteLine($"{input_ticker} has gone down {Math.Round(percentChange, 4)}% since the open this morning.", Console.ForegroundColor = ConsoleColor.Red);
+            }
+            else
+            {
+                Console.WriteLine($"{input_ticker} has gone up {Math.Round(percentChange, 4)}% since the open this morning!", Console.ForegroundColor = ConsoleColor.Green);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadLine();
         }
     }
 }
