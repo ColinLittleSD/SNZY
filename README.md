@@ -13,24 +13,25 @@ In order to run our project, you will need an authorization key provided by Post
 Once you have the authorization key, you can POST stocks and ETFs to Postman, as well as creating a portfolio to add stocks and ETFs to. To organize your requests, create 3 folders: Stocks, ETFs and Portfolio.
 
 #### The Stocks Requests, Routes, and Keys are as follows:
-
-* Post Stock - https://localhost:{hostnumber}/api/Stock - StockName / Ticker
-* Get Stock - https://localhost:{hostnumber}/api/Stock/
-* Get Stock By Ticker (will return real-time data on the stock) - https://localhost:{hostnumber/api/Stock/GetByTicker?ticker={ticker}
-* Post Stock In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/PostPortfolioStocks - 
-* Get Stocks In Portfolio - https://localhost:{hostnumber}/api/StockPortfolio/GetPortfolioStocks
-
-#### The ETF Requests and Routes are as follows:
-* Post ETF - https://localhost:{hostnumber}/api/ETF/ - Name / Ticker
-* Get ETF - https://localhost:{hostnumber}/api/ETF/
-* Post ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/PostPortfolioETFs - ETFId / PortfolioId
-* Get ETFs in Portfolio - https://localhost:{hostnumber}/api/ETFPortfolio/GetPortfolioETFs
-
-#### The Portfolio Requests and Routes are as follows:
-* Post Portfolio - https://localhost:{hostnumber}/api/Portfolio - Name
-* Get Portfolio - https://localhost:{hostnumber}/api/Portfolio
+* Post Stock - /api/Stock - StockName / Ticker
+* Get Stock - /api/Stock/
+* Get Stock By Ticker (will return REAL-TIME data on the stock) - /api/Stock/GetByTicker?ticker={ticker}
 
 
+#### The ETF Requests, Routes, and Keys are as follows:
+* Post ETF - /api/ETF/ - Name / Ticker
+* Get ETF - /api/ETF/
+
+
+#### The Portfolio Requests, Routes, and Keys are as follows:
+* Post Portfolio - /api/Portfolio - Name
+* Get Portfolio - /api/Portfolio
+* Post Stock In Portfolio - /api/StockPortfolio/PostPortfolioStocks - StockId / PortfolioId
+* Get Stocks In Portfolio - /api/StockPortfolio/GetPortfolioStocks
+* Post ETFs in Portfolio - /api/ETFPortfolio/PostPortfolioETFs - ETFId / PortfolioId
+* Get ETFs in Portfolio - /api/ETFPortfolio/GetPortfolioETFs
+* Remove Stocks from Portfolio - api/StockPortfolio/RemovePortfolioStocks/{id}
+* Remove ETFs from Portfolio - api/ETFPortfolio/RemovePortfolioETFs/{id}
 
 ### Future Plans
 We would like to expand the functionality of the console, by allowing the user to have more power to control their portfolio. Using parameters, buy/hold/sell suggestions can be added for each ticker searched.
